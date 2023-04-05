@@ -10,7 +10,7 @@ const database = {
           await sequelize.authenticate();
           console.log("Connection has been established successfully.");
         } catch (error) {
-          throw Error("Unable to connect to the database:", error);
+          throw Error(`Unable to connect to the database: ${error}`);
         }
     }
 }
