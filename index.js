@@ -1,10 +1,13 @@
-import app from "./server.js";
-import dotenv from "dotenv";
+const app = require("./server.js"); 
+const dotenv = require("dotenv"); 
+const database = require("./src/utils/databaseConn/connection");
+
 
 async function main() {
   dotenv.config();
   const port = process.env.PORT || 8000;
   try {
+   await database.isConnected();
     app.listen(port, () => {
       console.log("Server is running on port: " + port);
     });

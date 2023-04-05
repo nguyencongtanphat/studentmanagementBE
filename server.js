@@ -1,5 +1,8 @@
-import express from "express";
-import cors from "cors";
+
+const cors = require("cors"); 
+const express = require("express"); 
+
+
 
 const app = express();
 
@@ -13,4 +16,6 @@ app.use("/", (req, res)=>{
 app.use("*", (req, res) => {
   res.status(404).json({ error: "not found" });
 });
-export default app;
+
+
+module.exports = app;
