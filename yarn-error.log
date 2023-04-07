@@ -1,0 +1,54 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\khoag\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js init
+
+PATH: 
+  C:\Users\khoag\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\khoag\bin;C:\Python311\Scripts;C:\Python311;C:\Program Files (x86)\VMware\VMware Workstation\bin;C:\MinGW\bin;C:\app\khoag\product\12.2.0\client_1;C:\app\khoag\product\12.2.0\client_1\bin;C:\Database\Oracle\WINDOWS.X64_193000_db_home\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Users\khoag\AppData\Local\Programs\Python\Python310\Scripts;C:\Database\Oracle\instantclient_19_14;C:\Program Files\Cloudflare\Cloudflare WARP;C:\Program Files\Git\cmd;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\DTS\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn;C:\Program Files\Azure Data Studio\bin;C:\xampp\php;C:\composer;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\140\DTS\Binn;C:\Program Files\Microsoft SQL Server\160\DTS\Binn;C:\Program Files\Microsoft SQL Server Migration Assistant for Access\bin;C:\Users\khoag\AppData\Local\Programs\Python\Python310\Scripts;C:\Users\khoag\AppData\Local\Programs\Python\Python310;C:\Users\khoag\AppData\Local\Microsoft\WindowsApps;C:\Users\khoag\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\khoag\AppData\Local\Programs\Python\Python310\Scripts;C:\Program Files\Azure Data Studio\bin;C:\Database\Oracle\instantclient_19_14;C:\Program Files\Azure Data Studio\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2022.2.2\bin;C:\Users\khoag\AppData\Roaming\Composer\vendor\bin;C:\Users\khoag\AppData\Roaming\npm;C:\Program Files\nodejs;C:\Python311;C:\Python311\Scripts;C:\Users\khoag\.dotnet\tools;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.12.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: Can't answer a question unless a user TTY
+      at ConsoleReporter.question (C:\Users\khoag\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:92864:59)
+      at Object.<anonymous> (C:\Users\khoag\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:85054:38)
+      at Generator.next (<anonymous>)
+      at step (C:\Users\khoag\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\khoag\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+npm manifest: 
+  {
+    "name": "manage_student",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "dev": "nodemon --inspect ./index.js",
+      "start": "node ./index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "axios": "^1.3.4",
+      "bcrypt": "^5.1.0",
+      "body-parser": "^1.20.2",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "mysql2": "^3.2.0",
+      "sequelize": "^6.30.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

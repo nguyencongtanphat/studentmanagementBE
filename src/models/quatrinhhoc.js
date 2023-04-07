@@ -13,24 +13,30 @@ QuaTrinhHoc.init(
       type: DataTypes.INTEGER,
       references: {
         model: hocsinh,
-        key: "MaHS",
+        key: "id",
       },
     },
     MaLop: {
       type: DataTypes.INTEGER,
       references: {
         model: lop,
-        key: "MaLop",
+        key: "id",
       },
     },
     MaHK: {
       type: DataTypes.INTEGER,
       references: {
         model: hocky,
-        key: "MaHK",
+        key: "id",
       },
     },
-   
+    MaGV: {
+      typee: DataTypes.INTEGER,
+      references: {
+        model: giaovien,
+        key: "id"
+      }
+    },
     DiemTBHK: {
       type: DataTypes.DOUBLE,
     },
