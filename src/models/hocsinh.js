@@ -5,6 +5,11 @@ class HocSinh extends Model{}
 
 HocSinh.init(
   {
+    MaHS: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     HoTen: {
       type: DataTypes.STRING,
       require: true,

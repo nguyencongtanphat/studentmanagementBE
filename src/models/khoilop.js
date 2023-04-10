@@ -5,6 +5,11 @@ class KhoiLop extends Model {}
 
 KhoiLop.init(
   {
+    MaKhoi: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     Khoi: {
       type: DataTypes.SMALLINT,
       require: true,

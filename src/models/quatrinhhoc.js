@@ -9,6 +9,12 @@ class QuaTrinhHoc extends Model {}
 
 QuaTrinhHoc.init(
   {
+    MaQTH: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     MaHS: {
       type: DataTypes.INTEGER,
       references: {
@@ -30,7 +36,13 @@ QuaTrinhHoc.init(
         key: "MaHK",
       },
     },
-   
+    MaGV: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: giaovien,
+        key: "MaGV",
+      },
+    },
     DiemTBHK: {
       type: DataTypes.DOUBLE,
     },
