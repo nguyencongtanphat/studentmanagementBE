@@ -5,12 +5,17 @@ class LoaiKiemTra extends Model {}
 
 LoaiKiemTra.init(
   {
+    MaLKT: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     TenLKT: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     HeSo: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

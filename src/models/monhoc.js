@@ -5,17 +5,21 @@ class MonHoc extends Model {}
 
 MonHoc.init(
   {
+    MaMon: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     TenMon: {
       type: DataTypes.STRING,
       require: true,
     },
     HeSo: {
-      type: DataTypes.INT,
-      allowNull: false,
-    },
-    MaGV: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    DiemDat: {
+      type: DataTypes.FLOAT(4, 2),
     },
   },
   { sequelize, modelName: "MonHoc" }

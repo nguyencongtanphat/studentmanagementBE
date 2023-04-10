@@ -9,33 +9,39 @@ class QuaTrinhHoc extends Model {}
 
 QuaTrinhHoc.init(
   {
+    MaQTH: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     MaHS: {
       type: DataTypes.INTEGER,
       references: {
         model: hocsinh,
-        key: "id",
+        key: "MaHS",
       },
     },
     MaLop: {
       type: DataTypes.INTEGER,
       references: {
         model: lop,
-        key: "id",
+        key: "MaLop",
       },
     },
     MaHK: {
       type: DataTypes.INTEGER,
       references: {
         model: hocky,
-        key: "id",
+        key: "MaHK",
       },
     },
     MaGV: {
-      typee: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: giaovien,
-        key: "id"
-      }
+        key: "MaGV",
+      },
     },
     DiemTBHK: {
       type: DataTypes.DOUBLE,

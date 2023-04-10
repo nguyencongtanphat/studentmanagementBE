@@ -7,20 +7,26 @@ class BaoCaoTongKetMon extends Model {}
 
 BaoCaoTongKetMon.init(
   {
+    MaBCTKM: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     MaMon: {
-      type: DataTypes.INTEEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: monhoc,
-        key: "id"
-      }  
+        key: "MaMon",
+      },
     },
     MaHK: {
       type: DataTypes.INTEGER,
       references: {
         model: hocky,
-        key: "id"
-      }
-    }
+        key: "MaHK",
+      },
+    },
   },
   { sequelize, modelName: "BaoCaoTongKetMon" }
 );

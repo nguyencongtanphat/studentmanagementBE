@@ -8,26 +8,32 @@ class BangDiemMon extends Model {}
 
 BangDiemMon.init(
   {
+    MaBDM: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+
     MaQTH: {
       type: DataTypes.INTEGER,
       references: {
         model: quatrinhhoc,
-        key: "id"
-      }
+        key: "MaQTH",
+      },
     },
     MaGV: {
       type: DataTypes.INTEGER,
       references: {
         model: giaovien,
-        key: "id"
-      }
+        key: "MaGV",
+      },
     },
     MaMon: {
       type: DataTypes.INTEGER,
       references: {
         model: monhoc,
-        key: "id"
-      }
+        key: "MaMon",
+      },
     },
     DiemTBMon: {
       type: DataTypes.FLOAT(4, 2),

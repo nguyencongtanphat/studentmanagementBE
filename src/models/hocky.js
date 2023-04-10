@@ -1,12 +1,17 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/databaseConn/sequelize");
 
-class HocKy extends Model {}
+class HOCKY extends Model {}
 
-HocKy.init(
+HOCKY.init(
   {
-    HocKy: {
-      type: DataTypes.String,
+    MaHK: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    HocKyThu: {
+      type: DataTypes.SMALLINT,
       require: true,
     },
     NamHoc: {
@@ -14,7 +19,7 @@ HocKy.init(
       require: true,
     },
   },
-  { sequelize, modelName: "HocKy" }
+  { sequelize, modelName: "HOCKY" }
 );
 
-module.exports = HocKy;
+module.exports = HOCKY;

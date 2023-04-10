@@ -5,6 +5,11 @@ class Lop extends Model {}
 
 Lop.init(
   {
+    MaLop: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     TenLop: {
       type: DataTypes.STRING,
       require: true,

@@ -7,8 +7,9 @@ const giaovien = require("./giaovien");
 const ctbaocaotongketmon = require("./ctbaocaotongketmon");
 const baocaotongketmon = require("./baocaotongketmon");
 const bangdiemmon = require("./bangdiemmon");
-const ctbandiemmon = require("./ctbangdiemmon");
+const ctbangdiemmon = require("./ctbangdiemmon");
 const loaikiemtra = require("./loaikiemtra");
+const monhoc =  require("./monhoc.js");
 const baocaotongkethocky = require("./baocaotongkethocky");
 
 const associate = (_) => {
@@ -20,10 +21,9 @@ const associate = (_) => {
   khoilop.hasMany(lop, {
     foreignKey: "MaKhoi",
   }),
-  lop.belongsTo(khoilop),
-
-  // lop n - n baocaotongketmon (through ctbaocaotongketmon)
-  lop.belongsToMany(baocaotongketmon, { through: ctbaocaotongketmon });
+    lop.belongsTo(khoilop),
+    // lop n - n baocaotongketmon (through ctbaocaotongketmon)
+    lop.belongsToMany(baocaotongketmon, { through: ctbaocaotongketmon });
   baocaotongketmon.belongsToMany(lop, { through: ctbaocaotongketmon });
 
   //hocsinh n - n hocky (through quatrinhhoc)
@@ -40,7 +40,7 @@ const associate = (_) => {
 
   //giaovien n - n hocsinh (through quatrinhoc)
   giaovien.belongsToMany(hocsinh, {through: quatrinhhoc});
-  hocsinh.belongsToMany(giaovien, {throuhg: quatrinhhoc});
+  hocsinh.belongsToMany(giaovien, {through: quatrinhhoc});
 
   //lop n - n giaovien
   lop.belongsToMany(giaovien, {through: quatrinhhoc});
@@ -63,8 +63,8 @@ const associate = (_) => {
   quatrinhhoc.belongsToMany(giaovien, {through: bangdiemmon});
 
   //bangdiemmon n - n loaikiemtra (through ctbangdiemmon)
-  bangdiemmon.belongsToMany(loaikiemtra, {through: ctbandiemmon});
-  loaikiemtra.belongsToMany(bangdiemmon, {through: ctbandiemmon});
+  bangdiemmon.belongsToMany(loaikiemtra, { through: ctbangdiemmon });
+  loaikiemtra.belongsToMany(bangdiemmon, { through: ctbangdiemmon });
 
   //lop n - n hocky (through baocaotongkethocky
   hocky.belongsToMany(lop, {through: baocaotongkethocky});

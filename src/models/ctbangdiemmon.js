@@ -7,19 +7,25 @@ class CT_BangDiemMon extends Model {}
 
 CT_BangDiemMon.init(
   {
+    MaCTBDM: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     MaBDM: {
       type: DataTypes.INTEGER,
       references: {
         model: bangdiemmon,
-        key: "id"
-      }
+        key: "MaBDM",
+      },
     },
     MaLKT: {
       type: DataTypes.INTEGER,
       references: {
         model: loaikiemtra,
-        key: "id"
-      }
+        key: "MaLKT",
+      },
     },
     Diem: DataTypes.FLOAT(4, 2),
   },

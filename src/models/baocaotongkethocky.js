@@ -11,24 +11,23 @@ BaoCaoTongKetHocKy.init(
       type: DataTypes.INTEGER,
       references: {
         model: lop,
-        key: "id",
+        key: "MaLop",
       },
     },
     MaHK: {
       type: DataTypes.INTEGER,
       references: {
         model: hocky,
-        key: "id",
+        key: "MaHK",
       },
-    },   
+    },
     SoLuongDat: {
       type: DataTypes.INTEGER,
-      
     },
     TiLe: {
       type: DataTypes.DECIMAL(3, 2),
-      
     },
   },
   { sequelize, modelName: "BaoCaoTongKetHocKy" }
 );
+module.exports = BaoCaoTongKetHocKy;

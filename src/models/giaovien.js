@@ -5,6 +5,11 @@ class GiaoVien extends Model {}
 
 GiaoVien.init(
   {
+    MaGV: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     HoTen: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,7 +19,7 @@ GiaoVien.init(
       allowNull: false,
     },
     NamSinh: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     GioiTinh: {
