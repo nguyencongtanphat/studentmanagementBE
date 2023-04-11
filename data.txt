@@ -1,1 +1,0 @@
-INSERT INTO `Category` (`id`, `Name`, `createdAt`, `updatedAt`) VALUES (NULL, 'Trà', '2022-10-15 19:44:09.000000', '2022-10-15 19:44:09.000000');
