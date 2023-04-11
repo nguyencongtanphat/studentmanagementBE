@@ -69,6 +69,7 @@ const associate = (_) => {
   //lop n - n hocky (through baocaotongkethocky
   hocky.belongsToMany(lop, {through: baocaotongkethocky});
   lop.belongsToMany(hocky, {through: baocaotongkethocky}) 
+  
 };
 
 module.exports = associate;
