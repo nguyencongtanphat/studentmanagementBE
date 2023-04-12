@@ -1,4 +1,4 @@
-const associate = require("../../models/association");
+const associate = require("../models/association");
 const sequelize = require("./sequelize");
 const fs = require("fs");
 const readline = require("readline");

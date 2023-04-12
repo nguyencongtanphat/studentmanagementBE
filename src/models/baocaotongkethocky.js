@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../utils/databaseConn/sequelize");
+const sequelize = require("../utils/sequelize");
 const lop = require("./lop");
 const hocky = require("./hocky");
 

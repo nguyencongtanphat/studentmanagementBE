@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../utils/databaseConn/sequelize");
+const sequelize = require("../utils/sequelize");
 
 class GiaoVien extends Model {}
 

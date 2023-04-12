@@ -1,6 +1,6 @@
 const app = require("./server.js"); 
 const dotenv = require("dotenv"); 
-const database = require("./src/utils/databaseConn/connection");
+const database = require("./src/utils/connection");
 
 
 async function main() {
