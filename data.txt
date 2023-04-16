@@ -1,2 +1,2 @@
-INSERT INTO `hocsinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Nguyễn Phương Hằng', 'quận cam', '2002-10-15', 'Nữ', 'nguyencongtanphat@gmail.com');
-INSERT INTO `hocsinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Dũng Lò Heo', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
+INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Nguyễn Phương Hằng', 'quận cam', '2002-10-15', 'Nữ', 'nguyencongtanphat@gmail.com');
+INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Dũng Lò Heo', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');

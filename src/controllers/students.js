@@ -10,7 +10,7 @@ class studentController {
       }
       return res.status(200).json(Response.successResponse(students));
     } catch (err) {
-      return Response.handlingErrorResponse(err);
+        return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
 
@@ -18,12 +18,17 @@ class studentController {
     try {
       const id = req.params.id;
       const student = await studentModel.findByPk(id);
+      console.log("student info found", student)
       if (!student) {
-        throw "Something went wrong please wait a minute and try again";
+        console.log("get no student")
+        throw new Error(
+          "Something went wrong please wait a minute and try again"
+        );
       }
       return res.status(200).json(Response.successResponse(student));
     } catch (err) {
-      return Response.handlingErrorResponse(err);
+        console.log("catch err:", err);
+       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
 }
