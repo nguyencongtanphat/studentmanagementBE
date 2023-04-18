@@ -1,21 +1,20 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../utils/databaseConn/sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = require("../utils/sequelize");
 
-class ThamSo extends Model {}
-
-ThamSo.init(
-  {
-    TenThamSo: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-      allowNull: false
-    },
-    GiaTri: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
+const ThamSo = sequelize.define("ThamSo", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  { sequelize, modelName: "ThamSo" }
-);
-
+  TenThamSo: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+    allowNull: false,
+  },
+  GiaTri: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+});
 module.exports = ThamSo;

@@ -2,3 +2,9 @@ INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`
 INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
 INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A2', 30);
 INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A3', 39);
+
+INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 16);
+INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 18);
+INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Sỉ số tối đa', 40);
+INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Điểm đạt môn', 5);
+INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Điểm đạt', 5);
