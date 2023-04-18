@@ -12,7 +12,7 @@ const database = {
         //   })
         try {
           await sequelize.authenticate();
-          const isForce = true; // change this to true to reset to default db
+          const isForce = false; // change this to true to reset to default db
           associate();
           await sequelize.sync({ force: isForce });
           await ThamSoModel.sync({ force: isForce });

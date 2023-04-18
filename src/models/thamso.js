@@ -7,24 +7,13 @@ const ThamSo = sequelize.define("ThamSo", {
     autoIncrement: true,
     primaryKey: true,
   },
-  TuoiToiThieu: {
-    type: DataTypes.INTEGER,
+  TenThamSo: {
+    type: DataTypes.STRING,
+    primaryKey: true,
     allowNull: false,
   },
-  TuoiToiDa: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  SiSoToiDa: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  DiemDatMon: {
-    type: DataTypes.FLOAT(4, 2),
-    allowNull: false,
-  },
-  DiemDat: {
-    type: DataTypes.FLOAT(4, 2),
+  GiaTri: {
+    type: DataTypes.JSON,
     allowNull: false,
   },
 });
