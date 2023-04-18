@@ -47,7 +47,6 @@ class classController {
   static async createClass(req, res, next) {
     try {
       const newClass = classModel.build({
-        MaLop: req.body.MaLop,
         TenLop: req.body.TenLop,
         SiSo: req.body.SiSo,
       });

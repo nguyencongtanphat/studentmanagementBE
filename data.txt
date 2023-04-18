@@ -1,3 +1,4 @@
-INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Dũng Lò Heo', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
-INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(01, '1-A', 30);
-INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(02, '1-B', 39);
+INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Nguyễn Văn A', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
+INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
+INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A2', 30);
+INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A3', 39);
