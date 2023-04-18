@@ -5,20 +5,21 @@ const Response = require("../utils/response");
 class classController {
   static async getAllClasses(req, res, next) {
     try {
-      const query = {
-        where: {},
-      };
+      console.log("get all classes");
+      // const query = {
+      //   where: {},
+      // };
       // Check if each query parameter is present and add it to the query
-      if (req.query.MaLop) {
-        query.where.MaLop = req.query.MaLop;
-      }
-      if (req.query.TenLop) {
-        query.where.TenLop = req.query.TenLop;
-      }
-      if (req.query.SiSo) {
-        query.where.SiSo = req.query.SiSo;
-      }
-      const classes = await classModel.findAll(query);
+      // if (req.query.MaLop) {
+      //   query.where.MaLop = req.query.MaLop;
+      // }
+      // if (req.query.TenLop) {
+      //   query.where.TenLop = req.query.TenLop;
+      // }
+      // if (req.query.SiSo) {
+      //   query.where.SiSo = req.query.SiSo;
+      // }
+      const classes = await classModel.findAll();
       if (!classes) {
         throw "connection lost";
       }
@@ -30,8 +31,7 @@ class classController {
 
   static async getClassById(req, res, next) {
     try {
-      const id = req.params.id;
-      const class_ = await classModel.findByPk(id);
+      const class_ = await classModel.findByPk(req.params.id);
       if (!class_) {
         throw new Error(
           "Something went wrong"

@@ -1,3 +1,3 @@
 INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Dũng Lò Heo', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
-INSERT INTO `Lop` () VALUES(01, '1-A', 30);
-INSERT INTO `Lop` () VALUES(01, '1-B', 39);
+INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(01, '1-A', 30);
+INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(02, '1-B', 39);
