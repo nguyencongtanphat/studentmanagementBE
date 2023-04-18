@@ -11,7 +11,7 @@ const database = {
         //   })
         try {
           await sequelize.authenticate();
-          const isForce = false;
+          const isForce = true; // change this to true to reset to default db
           associate();
           await sequelize.sync({ force: isForce });
           // load data
