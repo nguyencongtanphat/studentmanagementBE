@@ -1,5 +1,5 @@
 const { query } = require("express");
-const classModel = require("../models/lop");
+const classModel = require("../models/class");
 const Response = require("../utils/response");
 
 class classController {
@@ -47,8 +47,8 @@ class classController {
   static async createClass(req, res, next) {
     try {
       const newClass = classModel.build({
-        TenLop: req.body.TenLop,
-        SiSo: req.body.SiSo,
+        name: req.body.className,
+        number: req.body.number,
       });
       const response = await newClass.save();
       return res.status(200).json(Response.successResponse(response));
@@ -79,7 +79,7 @@ class classController {
       query = {
         where: {},
       }
-      query.where.MaLop = req.query.id
+      query.where.idClass = req.query.id
       const response = await classModel.drop(query);
       if(!response) throw "can't connect with database";
       return res.status(200).json(Response.successResponse(response));

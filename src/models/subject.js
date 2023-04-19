@@ -1,25 +1,26 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class LoaiKiemTra extends Model {}
+class Subject extends Model {}
 
-LoaiKiemTra.init(
+Subject.init(
   {
-    MaLKT: {
+    idSubject: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    TenLKT: {
+    name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      require: true,
     },
-    HeSo: {
+    coefficent: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+   
   },
-  { sequelize, modelName: "LoaiKiemTra" }
+  { sequelize, modelName: "Subject" }
 );
 
-module.exports = LoaiKiemTra;
+module.exports = Subject;

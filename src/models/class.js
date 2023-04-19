@@ -1,26 +1,25 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class MonHoc extends Model {}
+class Class extends Model {}
 
-MonHoc.init(
+Class.init(
   {
-    MaMon: {
+    idClass: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    TenMon: {
+    name: {
       type: DataTypes.STRING,
       require: true,
     },
-    HeSo: {
+    number: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      require: true,
     },
-   
   },
-  { sequelize, modelName: "MonHoc" }
+  { sequelize, modelName: "Class" }
 );
 
-module.exports = MonHoc;
+module.exports = Class;

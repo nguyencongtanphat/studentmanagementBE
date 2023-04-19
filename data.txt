@@ -1,10 +1,3 @@
-INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Nguyễn Văn A', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
-INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
-INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A2', 30);
-INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A3', 39);
+INSERT INTO Teacher (idTeacher, fullName, address, dayOfBirth, gender, Email, startedDay) VALUES (null, 'Nguyễn Thị Thanh Hương', '11 Đường D2, Phường 25, Quận Bình Thạnh', '1994-04-23', 'Nữ', 'koaeklgsbv@gmail.com', '2021-06-01')
+INSERT INTO Teacher (idTeacher, fullName, address, dayOfBirth, gender, Email, startedDay) VALUES (null, 'Võ Hoàng Khang', '205 Lê Văn Lương, Phường Tân Hưng, Quận 7', '1990-11-08', 'Nam', 'alwovngbxl@gmail.com', '2021-06-01')
 
-INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 16);
-INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 18);
-INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Sỉ số tối đa', 40);
-INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Điểm đạt môn', 5);
-INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Điểm đạt', 5);
