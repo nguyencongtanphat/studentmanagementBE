@@ -13,28 +13,6 @@ BangDiemMon.init(
       primaryKey: true,
       autoIncrement: true,
     },
-
-    MaQTH: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: quatrinhhoc,
-        key: "MaQTH",
-      },
-    },
-    MaGV: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: giaovien,
-        key: "MaGV",
-      },
-    },
-    MaMon: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: monhoc,
-        key: "MaMon",
-      },
-    },
     DiemTBMon: {
       type: DataTypes.FLOAT(4, 2),
     },

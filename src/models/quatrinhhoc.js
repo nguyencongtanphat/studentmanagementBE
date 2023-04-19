@@ -15,34 +15,7 @@ QuaTrinhHoc.init(
       autoIncrement: true,
       allowNull: false,
     },
-    MaHS: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: hocsinh,
-        key: "MaHS",
-      },
-    },
-    MaLop: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: lop,
-        key: "MaLop",
-      },
-    },
-    MaHK: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: hocky,
-        key: "MaHK",
-      },
-    },
-    MaGV: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: giaovien,
-        key: "MaGV",
-      },
-    },
+    
     DiemTBHK: {
       type: DataTypes.DOUBLE,
     },

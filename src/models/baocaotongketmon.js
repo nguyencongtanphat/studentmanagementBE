@@ -13,20 +13,7 @@ BaoCaoTongKetMon.init(
       autoIncrement: true,
       allowNull: false,
     },
-    MaMon: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: monhoc,
-        key: "MaMon",
-      },
-    },
-    MaHK: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: hocky,
-        key: "MaHK",
-      },
-    },
+    
   },
   { sequelize, modelName: "BaoCaoTongKetMon" }
 );

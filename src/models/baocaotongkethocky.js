@@ -7,20 +7,7 @@ class BaoCaoTongKetHocKy extends Model {}
 
 BaoCaoTongKetHocKy.init(
   {
-    MaLop: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: lop,
-        key: "MaLop",
-      },
-    },
-    MaHK: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: hocky,
-        key: "MaHK",
-      },
-    },
+    
     SoLuongDat: {
       type: DataTypes.INTEGER,
     },

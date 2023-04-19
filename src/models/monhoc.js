@@ -18,9 +18,7 @@ MonHoc.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    DiemDat: {
-      type: DataTypes.FLOAT(4, 2),
-    },
+   
   },
   { sequelize, modelName: "MonHoc" }
 );

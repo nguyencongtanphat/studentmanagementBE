@@ -14,13 +14,7 @@ CtBaoCaoTongKetMon.init(
         key: "MaBCTKM",
       },
     },
-    MaLop: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: lop,
-        key: "MaLop",
-      },
-    },
+    
     SoLuongDat: {
       type: DataTypes.INTEGER,
       require: true,

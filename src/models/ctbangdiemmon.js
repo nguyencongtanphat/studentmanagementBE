@@ -13,20 +13,7 @@ CT_BangDiemMon.init(
       autoIncrement: true,
       allowNull: false,
     },
-    MaBDM: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: bangdiemmon,
-        key: "MaBDM",
-      },
-    },
-    MaLKT: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: loaikiemtra,
-        key: "MaLKT",
-      },
-    },
+   
     Diem: DataTypes.FLOAT(4, 2),
   },
   { sequelize, modelName: "CT_BangDiemMon" }
