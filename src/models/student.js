@@ -1,28 +1,28 @@
-const {  Model, DataTypes } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class HocSinh extends Model{}
+class Student extends Model{}
 
-HocSinh.init(
+Student.init(
   {
-    MaHS: {
+    idStudent: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    HoTen: {
+    fullName: {
       type: DataTypes.STRING,
       require: true,
     },
-    DiaChi: {
+    address: {
       type: DataTypes.STRING,
       require: true,
     },
-    NamSinh: {
+    dayOfBirth: {
       type: DataTypes.DATEONLY,
       require: true,
     },
-    GioiTinh: {
+    gender: {
       type: DataTypes.ENUM("Nam", "Nữ"),
       require: true,
     },
@@ -35,7 +35,7 @@ HocSinh.init(
       },
     },
   },
-  { sequelize, modelName: "HocSinh" }
+  { sequelize, modelName: "Student" }
 );
 
-module.exports = HocSinh;
+module.exports = Student;

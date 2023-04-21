@@ -1,4 +1,4 @@
-const studentModel = require("../models/hocsinh");
+const studentModel = require("../models/student");
 const Response = require("../utils/response");
 
 class studentController {
@@ -8,17 +8,17 @@ class studentController {
         where: {},
       };
       // Check if each query parameter is present and add it to the query
-      if (req.query.HoTen) {
-        query.where.HoTen = req.query.HoTen;
+      if (req.query.fullName) {
+        query.where.fullName = req.query.fullName;
       }
-      if (req.query.DiaChi) {
-        query.where.DiaChi = req.query.DiaChi;
+      if (req.query.address) {
+        query.where.address = req.query.address;
       }
-      if (req.query.NamSinh) {
-        query.where.NamSinh = req.query.NamSinh;
+      if (req.query.dayOfBirth) {
+        query.where.dayOfBirth = req.query.dayOfBirth;
       }
-      if (req.query.GioiTinh) {
-        query.where.GioiTinh = req.query.GioiTinh;
+      if (req.query.gender) {
+        query.where.gender = req.query.gender;
       }
       if (req.query.Email) {
         query.where.Email = req.query.Email;
@@ -53,10 +53,10 @@ class studentController {
   static async createStudent(req, res, next) {
     try {
       const newStudent = studentModel.build({
-        HoTen: req.body.HoTen,
-        DiaChi: req.body.DiaChi,
-        NamSinh: req.body.NamSinh,
-        GioiTinh: req.body.GioiTinh,
+        fullName: req.body.fullName,
+        address: req.body.address,
+        dayOfBirth: req.body.dayOfBirth,
+        gender: req.body.gender,
         Email: req.body.Email,
       });
       const response = await newStudent.save();
