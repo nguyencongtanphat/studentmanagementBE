@@ -1,5 +1,9 @@
 const { query } = require("express");
 const classModel = require("../models/lop");
+const teacherModel = require("../models/giaovien");
+const studentModel = require("../models/hocsinh")
+const semesterModel = require("../models/hocky");
+const quaTrinhHocModel = require("../models/quatrinhhoc");
 const Response = require("../utils/response");
 
 class classController {
@@ -87,6 +91,66 @@ class classController {
     catch(err){
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
+    }
+  }
+
+
+  static async addStudentToClass(req, res, next){
+    try{
+      const classId = req.params.id;
+      const listStudentId = req.body.studentListId;
+
+      //find class
+      const classInstance = await classModel.findByPk(classId);
+
+      //find all students
+      const students = await studentModel.findAll({
+        where: { MaHS: listStudentId },
+      });
+
+     // classInstance.addHocSinh(students);
+     
+     // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
+      const quatrinhHocInstances = students.map((student) => {
+        return {
+          HocSinhMaHS: student.MaHS,
+          LopMaLop: classInstance.MaLop,
+          HOCKYMaHK: 1,
+          GiaoVienMaGV: 1,
+        };
+      });
+      console.log("qth ", quatrinhHocInstances);
+
+      // quatrinhHocInstances.forEach(async(item)=>  )
+      //bulk create QuaTrinhHoc instances
+      const result = await quaTrinhHocModel.bulkCreate(quatrinhHocInstances);
+
+      //classInstance.addHocSinh(students);
+      // await Promise.all(
+      //   students.map((st) =>
+      //     quaTrinhHocModel.create({
+      //       LopMaLop: classId,
+      //       HocSinhMaHS: st.MaHS,
+      //       HOCKYMaHK: 1,
+      //       GiaoVienMaGV: 1, // bạn có thể cập nhật sau khi biết giáo viên phụ trách
+      //       DiemTBHK: null, // bạn có thể cập nhật sau khi biết kết quả học tập
+      //     })
+      //   )
+      // );
+
+      // //find the teacher
+      // const teacher = await teacherModel.findByPk(1)
+
+      // const semester = await semesterModel.findByPk(1);
+      // console.log("semester", semester)
+      // classInstance.addHOCKY(semester);
+
+      res.json(result);
+    }catch(err){
+      res.json({
+        "loi":err
+      });
+
     }
   }
 }

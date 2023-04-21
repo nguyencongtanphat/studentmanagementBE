@@ -6,10 +6,6 @@ const ThamSoModel = require("../models/thamso")
 
 const database = {
     isConnected: async () =>{
-        //   await sequelize.authenticate()
-        //   .then(async ()=>{
-            
-        //   })
         try {
           await sequelize.authenticate();
           const isForce = true; // change this to true to reset to default db

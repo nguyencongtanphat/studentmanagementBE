@@ -3,6 +3,12 @@ INSERT INTO `HocSinh` (`MaHS`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`
 INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A2', 30);
 INSERT INTO `Lop` (`MaLop`, `TenLop`, `SiSo`) VALUES(NULL, '10A3', 39);
 
+INSERT INTO `GiaoVien` (`MaGV`, `HoTen`, `DiaChi`, `NamSinh`, `GioiTinh`, `Email`, `NgayNhanViec`  ) VALUES(NULL, 'Nguyen Van A', 'Khu A', '2002-10-15', 'Nam', '123@gmail.com', '2002-10-15' );
+INSERT INTO `HocKy` (`MaHK`, `HocKyThu`, `NamHoc`) VALUES (NULL, 1, 2020);
+
+
+
+
 INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 16);
 INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Tuổi tối thiểu', 18);
 INSERT INTO `ThamSo` (`id`, `TenThamSo`, `GiaTri`) VALUES(NULL, 'Sỉ số tối đa', 40);

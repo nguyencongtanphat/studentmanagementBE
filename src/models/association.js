@@ -14,8 +14,8 @@ const baocaotongkethocky = require("./baocaotongkethocky");
 
 const associate = (_) => {
   //Hocsinh n-n lop (through quatrinhhoc)
-  lop.belongsToMany(hocsinh, { through: quatrinhhoc });
-  hocsinh.belongsToMany(lop, { through: quatrinhhoc });
+  lop.belongsToMany(hocsinh, { through: { model: quatrinhhoc , unique: false } }); 
+  hocsinh.belongsToMany(lop, { through: { model: quatrinhhoc , unique: false } });
 
   //khoilop 1-n lop
   khoilop.hasMany(lop, {
@@ -27,24 +27,24 @@ const associate = (_) => {
   baocaotongketmon.belongsToMany(lop, { through: ctbaocaotongketmon });
 
   //hocsinh n - n hocky (through quatrinhhoc)
-  hocky.belongsToMany(hocsinh, { through: quatrinhhoc });
-  hocsinh.belongsToMany(hocky, { through: quatrinhhoc });
+  hocky.belongsToMany(hocsinh,  { through: { model: quatrinhhoc , unique: false } });
+  hocsinh.belongsToMany(hocky,  { through: { model: quatrinhhoc , unique: false } });
 
   //hocky n - n giaovien (through quatrinhhoc)
-  hocky.belongsToMany(giaovien, {through: quatrinhhoc});
-  giaovien.belongsToMany(hocky, {through: quatrinhhoc});
+  hocky.belongsToMany(giaovien, { through: { model: quatrinhhoc , unique: false } });
+  giaovien.belongsToMany(hocky, { through: { model: quatrinhhoc , unique: false } });
 
   //hocky n - n lop (through quatrinhhoc)
-  hocky.belongsToMany(lop, {through: quatrinhhoc});
-  lop.belongsToMany(hocky, {through: quatrinhhoc});
+  hocky.belongsToMany(lop, { through: { model: quatrinhhoc , unique: false } });
+  lop.belongsToMany(hocky, { through: { model: quatrinhhoc , unique: false } });
 
   //giaovien n - n hocsinh (through quatrinhoc)
-  giaovien.belongsToMany(hocsinh, {through: quatrinhhoc});
-  hocsinh.belongsToMany(giaovien, {through: quatrinhhoc});
+  giaovien.belongsToMany(hocsinh, { through: { model: quatrinhhoc , unique: false } });
+  hocsinh.belongsToMany(giaovien, { through: { model: quatrinhhoc , unique: false } });
 
   //lop n - n giaovien
-  lop.belongsToMany(giaovien, {through: quatrinhhoc});
-  giaovien.belongsToMany(lop, {through: quatrinhhoc});
+  lop.belongsToMany(giaovien, { through: { model: quatrinhhoc , unique: false } });
+  giaovien.belongsToMany(lop, { through: { model: quatrinhhoc , unique: false } });
 
   //hocky n - n monhoc
   hocky.belongsToMany(monhoc, {through: baocaotongketmon});
