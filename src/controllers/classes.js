@@ -1,9 +1,9 @@
 const { query } = require("express");
-const classModel = require("../models/lop");
-const teacherModel = require("../models/giaovien");
-const studentModel = require("../models/hocsinh")
-const semesterModel = require("../models/hocky");
-const quaTrinhHocModel = require("../models/quatrinhhoc");
+const classModel = require("../models/class");
+const teacherModel = require("../models/teacher");
+const studentModel = require("../models/student")
+const semesterModel = require("../models/semester");
+const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 
 class classController {
@@ -98,53 +98,33 @@ class classController {
   static async addStudentToClass(req, res, next){
     try{
       const classId = req.params.id;
+      console.log("classId: " + classId);
       const listStudentId = req.body.studentListId;
+      console.log("listStudentId: " + listStudentId);
 
       //find class
       const classInstance = await classModel.findByPk(classId);
+      console.log("classInstance: " + classInstance)
 
       //find all students
       const students = await studentModel.findAll({
-        where: { MaHS: listStudentId },
+        where: { idStudent: listStudentId },
       });
+      console.log("students: " + students)
 
-     // classInstance.addHocSinh(students);
-     
      // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
-      const quatrinhHocInstances = students.map((student) => {
+      const progressInstances = students.map((student) => {
         return {
-          HocSinhMaHS: student.MaHS,
-          LopMaLop: classInstance.MaLop,
-          HOCKYMaHK: 1,
-          GiaoVienMaGV: 1,
+          StudentIdStudent: student.idStudent,
+          ClassIdClass: classInstance.idClass,
+          SemesterIdSemester: 1,
+          TeacherIdTeacher: 1,
         };
       });
-      console.log("qth ", quatrinhHocInstances);
+      console.log("qth ", progressInstances);
 
-      // quatrinhHocInstances.forEach(async(item)=>  )
-      //bulk create QuaTrinhHoc instances
-      const result = await quaTrinhHocModel.bulkCreate(quatrinhHocInstances);
-
-      //classInstance.addHocSinh(students);
-      // await Promise.all(
-      //   students.map((st) =>
-      //     quaTrinhHocModel.create({
-      //       LopMaLop: classId,
-      //       HocSinhMaHS: st.MaHS,
-      //       HOCKYMaHK: 1,
-      //       GiaoVienMaGV: 1, // bạn có thể cập nhật sau khi biết giáo viên phụ trách
-      //       DiemTBHK: null, // bạn có thể cập nhật sau khi biết kết quả học tập
-      //     })
-      //   )
-      // );
-
-      // //find the teacher
-      // const teacher = await teacherModel.findByPk(1)
-
-      // const semester = await semesterModel.findByPk(1);
-      // console.log("semester", semester)
-      // classInstance.addHOCKY(semester);
-
+      const result = await progressModel.bulkCreate(progressInstances);
+      console.log("result ", result);
       res.json(result);
     }catch(err){
       res.json({

@@ -19,7 +19,7 @@ Test.init(
       allowNull: false,
     },
   },
-  { sequelize, modelName: "coefficent" }
+  { sequelize, modelName: "Test" }
 );
 
 module.exports = Test;

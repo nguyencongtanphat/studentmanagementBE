@@ -1,3 +1,16 @@
-INSERT INTO Teacher (idTeacher, fullName, address, dayOfBirth, gender, Email, startedDay) VALUES (null, 'Nguyễn Thị Thanh Hương', '11 Đường D2, Phường 25, Quận Bình Thạnh', '1994-04-23', 'Nữ', 'koaeklgsbv@gmail.com', '2021-06-01')
-INSERT INTO Teacher (idTeacher, fullName, address, dayOfBirth, gender, Email, startedDay) VALUES (null, 'Võ Hoàng Khang', '205 Lê Văn Lương, Phường Tân Hưng, Quận 7', '1990-11-08', 'Nam', 'alwovngbxl@gmail.com', '2021-06-01')
+INSERT INTO Teacher (`idTeacher`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`, `startedDay`) VALUES (null, 'Nguyễn Thị Thanh Hương', '11 Đường D2, Phường 25, Quận Bình Thạnh', '1994-04-23', 'Nữ', 'koaeklgsbv@gmail.com', '2021-06-01')
+INSERT INTO Teacher (`idTeacher`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`, `startedDay`) VALUES (null, 'Võ Hoàng Khang', '205 Lê Văn Lương, Phường Tân Hưng, Quận 7', '1990-11-08', 'Nam', 'alwovngbxl@gmail.com', '2021-06-01')
+
+INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Nguyễn Văn A', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
+INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A2', 30);
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A3', 39);
+
+
+INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Tuổi tối thiểu', 16);
+INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Tuổi tối thiểu', 18);
+INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Sỉ số tối đa', 40);
+INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm đạt môn', 5);
+INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm đạt', 5);
+
 
