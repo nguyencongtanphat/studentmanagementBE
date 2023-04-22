@@ -13,4 +13,6 @@ INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Sỉ số
 INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm đạt môn', 5);
 INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm đạt', 5);
 
+INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '1', '2020')
+
 
