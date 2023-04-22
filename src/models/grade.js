@@ -1,21 +1,21 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class KhoiLop extends Model {}
+class Grade extends Model {}
 
-KhoiLop.init(
+Grade.init(
   {
-    MaKhoi: {
+    idGrade: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    Khoi: {
+    name: {
       type: DataTypes.SMALLINT,
       require: true,
     },
   },
-  { sequelize, modelName: "KhoiLop" }
+  { sequelize, modelName: "Grade" }
 );
 
-module.exports = KhoiLop;
+module.exports = Grade;

@@ -1,25 +1,25 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class HOCKY extends Model {}
+class Semester extends Model {}
 
-HOCKY.init(
+Semester.init(
   {
-    MaHK: {
+    idSemester: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    HocKyThu: {
+    order: {
       type: DataTypes.SMALLINT,
       require: true,
     },
-    NamHoc: {
+    year: {
       type: DataTypes.SMALLINT,
       require: true,
     },
   },
-  { sequelize, modelName: "HOCKY" }
+  { sequelize, modelName: "Semester" }
 );
 
-module.exports = HOCKY;
+module.exports = Semester;

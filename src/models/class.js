@@ -1,25 +1,25 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class Lop extends Model {}
+class Class extends Model {}
 
-Lop.init(
+Class.init(
   {
-    MaLop: {
+    idClass: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    TenLop: {
+    name: {
       type: DataTypes.STRING,
       require: true,
     },
-    SiSo: {
+    number: {
       type: DataTypes.INTEGER,
       require: true,
     },
   },
-  { sequelize, modelName: "Lop" }
+  { sequelize, modelName: "Class" }
 );
 
-module.exports = Lop;
+module.exports = Class;

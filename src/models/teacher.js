@@ -1,32 +1,32 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class GiaoVien extends Model {}
+class Teacher extends Model {}
 
-GiaoVien.init(
+Teacher.init(
   {
-    MaGV: {
+    idTeacher: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    HoTen: {
+    fullName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    DiaChi: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    NamSinh: {
+    dayOfBirth: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    GioiTinh: {
+    gender: {
       type: DataTypes.ENUM("Nam", "Nữ"),
       allowNull: false,
     },
-    Email: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -34,12 +34,12 @@ GiaoVien.init(
         isEmail: true,
       },
     },
-    NgayNhanViec: {
+    startedDay: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
   },
-  { sequelize, modelName: "GiaoVien" }
+  { sequelize, modelName: "Teacher" }
 );
 
-module.exports = GiaoVien;
+module.exports = Teacher;

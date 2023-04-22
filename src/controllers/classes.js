@@ -1,5 +1,9 @@
 const { query } = require("express");
-const classModel = require("../models/lop");
+const classModel = require("../models/class");
+const teacherModel = require("../models/teacher");
+const studentModel = require("../models/student")
+const semesterModel = require("../models/semester");
+const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 
 class classController {
@@ -47,8 +51,8 @@ class classController {
   static async createClass(req, res, next) {
     try {
       const newClass = classModel.build({
-        TenLop: req.body.TenLop,
-        SiSo: req.body.SiSo,
+        name: req.body.className,
+        number: req.body.number,
       });
       const response = await newClass.save();
       return res.status(200).json(Response.successResponse(response));
@@ -79,7 +83,7 @@ class classController {
       query = {
         where: {},
       }
-      query.where.MaLop = req.query.id
+      query.where.idClass = req.query.id
       const response = await classModel.drop(query);
       if(!response) throw "can't connect with database";
       return res.status(200).json(Response.successResponse(response));
@@ -87,6 +91,46 @@ class classController {
     catch(err){
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
+    }
+  }
+
+
+  static async addStudentToClass(req, res, next){
+    try{
+      const classId = req.params.id;
+      console.log("classId: " + classId);
+      const listStudentId = req.body.studentListId;
+      console.log("listStudentId: " + listStudentId);
+
+      //find class
+      const classInstance = await classModel.findByPk(classId);
+      console.log("classInstance: " + classInstance)
+
+      //find all students
+      const students = await studentModel.findAll({
+        where: { idStudent: listStudentId },
+      });
+      console.log("students: " + students)
+
+     // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
+      const progressInstances = students.map((student) => {
+        return {
+          StudentIdStudent: student.idStudent,
+          ClassIdClass: classInstance.idClass,
+          SemesterIdSemester: 1,
+          TeacherIdTeacher: 1,
+        };
+      });
+      console.log("qth ", progressInstances);
+
+      const result = await progressModel.bulkCreate(progressInstances);
+      console.log("result ", result);
+      res.json(result);
+    }catch(err){
+      res.json({
+        "loi":err
+      });
+
     }
   }
 }

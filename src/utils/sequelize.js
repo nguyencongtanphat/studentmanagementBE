@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
+
 const sequelize = new Sequelize("managestudent", "root", null, {
   host: "localhost",
   dialect: "mysql",
