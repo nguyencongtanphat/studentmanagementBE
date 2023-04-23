@@ -14,5 +14,16 @@ INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm �
 INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm đạt', 5);
 
 INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '1', '2020')
+INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '2', '2019')
 
+INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Toan', 10);
+INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Van', 10);
+INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Anh', 10);
+INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Ly', 10);
 
+INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 10);
+INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 11);
+INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 12);
+
+INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '1 tiet', 2);
+INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '15 phut', 1);

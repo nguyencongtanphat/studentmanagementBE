@@ -80,11 +80,11 @@ class classController {
   }
   static async deleteClassById(req, res, next) {
     try{
-      query = {
+      let qry = {
         where: {},
       }
-      query.where.idClass = req.query.id
-      const response = await classModel.drop(query);
+      qry.where.idClass = req.params.id
+      const response = await classModel.destroy(qry);
       if(!response) throw "can't connect with database";
       return res.status(200).json(Response.successResponse(response));
     }
