@@ -6,6 +6,7 @@ const semesterModel = require("../models/semester");
 const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 
+
 const addStudentToClass = async (classId, listStudentId, semesterId, teacherId=1) => {
   try{
     // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
@@ -25,30 +26,30 @@ const addStudentToClass = async (classId, listStudentId, semesterId, teacherId=1
     console.log("err while creating progress add student to class")
     throw Error(err);
   }
- 
+
 };
 
 class classController {
   static async getAllClasses(req, res, next) {
     try {
       console.log("get all classes");
-      // const query = {
-      //   where: {},
-      // };
-      // Check if each query parameter is present and add it to the query
-      // if (req.query.MaLop) {
-      //   query.where.MaLop = req.query.MaLop;
-      // }
-      // if (req.query.TenLop) {
-      //   query.where.TenLop = req.query.TenLop;
-      // }
-      // if (req.query.SiSo) {
-      //   query.where.SiSo = req.query.SiSo;
-      // }
-      const classes = await classModel.findAll();
-      if (!classes) {
-        throw "connection lost";
+      const query = {
+        where: {},
+        include:[]
+      };
+      
+      if (req.query.semesterId){
+        query.include.push({
+          model: semesterModel,
+          where:{
+            idSemester: req.query.semesterId
+          }
+        });
       }
+      
+      const classes = await classModel.findAll(query);
+      console.log("class:", classes)
+     
       return res.status(200).json(Response.successResponse(classes));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -72,26 +73,45 @@ class classController {
 
   static async createClass(req, res, next) {
     try {
-      
+
       const {className, teacherId, semesterId, idStudentList} = req.body;
       //check class is already exists
-      
-
-      //create class
-      const newClass = classModel.build({
-        name: className,
-        number: idStudentList.length,
+      const classCheck = await classModel.findOne({
+        where: {
+          name: className,
+        },
+        include: [
+          {
+            model: semesterModel,
+            where: {
+              idSemester: semesterId,
+            },
+          },
+        ],
       });
-      const responseNewClass = await newClass.save();
-      //add student to class
-      const result =await addStudentToClass(
-        responseNewClass.idClass,
-        idStudentList,
-        semesterId,
-        teacherId
-      );
-      console.log("result:", result);
-      return res.status(200).json(Response.successResponse(result));
+     
+      console.log("class check:", classCheck);
+      if (classCheck){
+        throw new Error('class is existing');
+      }else{
+        //create class
+        const newClass = classModel.build({
+          name: className,
+          number: idStudentList.length,
+        });
+        const responseNewClass = await newClass.save();
+        //add student to class
+        const result = await addStudentToClass(
+          responseNewClass.idClass,
+          idStudentList,
+          semesterId,
+          teacherId
+        );
+        console.log("result:", result);
+        return res.status(200).json(Response.successResponse(result));
+      }
+
+     
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -102,7 +122,7 @@ class classController {
     try {
       const id = req.params.id;
       const class_ = await classModel.findByPk(id);
-      
+
       if (!class_) {
         throw Error("Class not found");
       }

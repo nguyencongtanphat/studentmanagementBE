@@ -1,7 +1,10 @@
 const studentModel = require("../models/student");
+const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
 const Response = require("../utils/response");
 const Class = require("../models/class");
+
+
 
 class studentController {
   static async getAllStudents(req, res, next) {
@@ -22,6 +25,24 @@ class studentController {
           model: Class,
           where: {
             name: req.query.className,
+          },
+        });
+      }
+
+      if(req.query.classId){
+        query.include.push({
+          model: Class,
+          where:{
+            idClass:req.query.classId,
+          }
+        });
+      }
+
+      if (req.query.semesterId) {
+        query.include.push({
+          model: semesterModel,
+          where: {
+            idSemester: req.query.semesterId,
           },
         });
       }
