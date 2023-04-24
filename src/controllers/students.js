@@ -1,28 +1,31 @@
 const studentModel = require("../models/student");
+const parameterModel = require("../models/parameter");
 const Response = require("../utils/response");
+const Class = require("../models/class");
 
 class studentController {
   static async getAllStudents(req, res, next) {
     try {
       const query = {
         where: {},
+        include:[]
       };
-      // Check if each query parameter is present and add it to the query
+
+      
       if (req.query.fullName) {
+        // Check if each query parameter is present and add it to the query
         query.where.fullName = req.query.fullName;
+      } 
+      
+      if(req.query.className){
+        query.include.push({
+          model: Class,
+          where: {
+            name: req.query.className,
+          },
+        });
       }
-      if (req.query.address) {
-        query.where.address = req.query.address;
-      }
-      if (req.query.dayOfBirth) {
-        query.where.dayOfBirth = req.query.dayOfBirth;
-      }
-      if (req.query.gender) {
-        query.where.gender = req.query.gender;
-      }
-      if (req.query.Email) {
-        query.where.Email = req.query.Email;
-      }
+      
 
       const students = await studentModel.findAll(query);
       if (!students) {
@@ -37,13 +40,24 @@ class studentController {
   static async getStudentById(req, res, next) {
     try {
       const id = req.params.id;
+      //find the student
       const student = await studentModel.findByPk(id);
+      //find all the class students learn
+      const classStudent =await student.getClasses();
+      const classNames = classStudent.map((classObj) => classObj.name);
+      console.log("class: ", classStudent);
+
       if (!student) {
         throw new Error(
           "Something went wrong please wait a minute and try again"
         );
       }
-      return res.status(200).json(Response.successResponse(student));
+      return res.status(200).json(
+        Response.successResponse({
+          ...student.dataValues,
+          classes: classNames,
+        })
+      );
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
