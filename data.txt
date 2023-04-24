@@ -3,6 +3,7 @@ INSERT INTO Teacher (`idTeacher`, `fullName`, `address`, `dayOfBirth`, `gender`,
 
 INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Nguyễn Văn A', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
 INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
+INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị C', 'quận cam', '2002-10-15', 'Nữ', 'nguyencongtan2@gmail.com');
 INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A2', 30);
 INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A3', 39);
 
@@ -15,6 +16,8 @@ INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'Điểm �
 
 INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '1', '2020')
 INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '2', '2019')
+INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '1', '2023')
+INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '2', '2023')
 
 INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Toan', 10);
 INSERT INTO `Subject` (`idSubject`, `name`, `coefficent`) VALUES(NULL, 'Van', 10);
