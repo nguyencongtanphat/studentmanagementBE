@@ -7,7 +7,7 @@ const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 
 
-const addStudentToClass = async (classId, listStudentId, semesterId, teacherId=1) => {
+const addStudentToClass = async (classId, listStudentId, semesterId, teacherId) => {
   try{
     // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
     const progressInstances = listStudentId.map((studentId) => {
@@ -86,9 +86,14 @@ class classController {
             where: {
               idSemester: semesterId,
             },
+            through: {
+              model: progressModel,
+              attributes: [],
+            },
           },
         ],
       });
+
      
       console.log("class check:", classCheck);
       if (classCheck){
