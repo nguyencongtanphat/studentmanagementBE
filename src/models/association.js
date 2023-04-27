@@ -25,8 +25,8 @@ const associate = (_) => {
   }),
     Class.belongsTo(grade),
     // lop n - n baocaotongketmon (through ctbaocaotongketmon)
-    Class.belongsToMany(subjectReport, { through: subjectReportDetail });
-  subjectReport.belongsToMany(Class, { through: subjectReportDetail });
+    Class.belongsToMany(subjectReport, { through: {model:subjectReportDetail, unique: false} });
+  subjectReport.belongsToMany(Class, { through: {model:subjectReportDetail, unique: false} });
 
   //hocsinh n - n hocky (through quatrinhhoc)
   semester.belongsToMany(student, {
@@ -65,28 +65,28 @@ const associate = (_) => {
   teacher.belongsToMany(Class, { through: { model: progress, unique: false } });
 
   //hocky n - n monhoc
-  semester.belongsToMany(subject, { through: subjectReport });
-  subject.belongsToMany(semester, { through: subjectReport });
+  semester.belongsToMany(subject, { through: {model:subjectReport, unique: false} });
+  subject.belongsToMany(semester, { through: {model:subjectReport, unique: false} });
 
   //monhoc n - n giaovien
-  subject.belongsToMany(teacher, { through: subjectScore });
-  teacher.belongsToMany(subject, { through: subjectScore });
+  subject.belongsToMany(teacher, { through: {model:subjectScore, unique:false} });
+  teacher.belongsToMany(subject, { through: {model:subjectScore, unique:false} });
 
   //monhoc n - n quatrinhhoc
-  subject.belongsToMany(progress, { through: subjectScore });
-  progress.belongsToMany(subject, { through: subjectScore });
+  subject.belongsToMany(progress, { through: {model:subjectScore, unique:false} });
+  progress.belongsToMany(subject, { through: {model:subjectScore, unique:false} });
 
   //giaovien n - n quatrinhhoc
-  teacher.belongsToMany(progress, { through: subjectScore });
-  progress.belongsToMany(teacher, { through: subjectScore });
+  teacher.belongsToMany(progress, { through: {model:subjectScore, unique:false} });
+  progress.belongsToMany(teacher, { through: {model:subjectScore, unique:false} });
 
   //bangdiemmon n - n loaikiemtra (through ctbangdiemmon)
-  subjectScore.belongsToMany(test, { through: subjectScoreDetail });
-  test.belongsToMany(subjectScore, { through: subjectScoreDetail });
+  subjectScore.belongsToMany(test, { through: {model:subjectScoreDetail, unique:false} });
+  test.belongsToMany(subjectScore, { through: {model:subjectScoreDetail, unique:false} });
 
   //lop n - n hocky (through baocaotongkethocky
-  semester.belongsToMany(Class, { through: semesterReport });
-  Class.belongsToMany(semester, { through: semesterReport });
+  semester.belongsToMany(Class, { through: {model:semesterReport, unique:false} });
+  Class.belongsToMany(semester, { through: {model:semesterReport, unique:false} });
 };
 
 module.exports = associate;

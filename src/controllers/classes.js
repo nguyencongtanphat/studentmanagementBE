@@ -167,11 +167,9 @@ class classController {
         teacherId
       );
       console.log("result ", result);
-      res.json(result);
+      return res.status(200).json(Response.successResponse(result));
     }catch(err){
-      res.json({
-        "error":err
-      });
+      return res.status(404).json(Response.errorResponse(404, err.message));
 
     }
   }
