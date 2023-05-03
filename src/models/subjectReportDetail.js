@@ -8,10 +8,9 @@ SubjectReportDetail.init(
   {
     idSRD: {
       type: DataTypes.INTEGER,
-      references: {
-        model: SubjectReport,
-        key: "idSR",
-      },
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
     },
     passedNumber: {
       type: DataTypes.INTEGER,
