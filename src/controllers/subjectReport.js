@@ -6,6 +6,10 @@ const classModel = require("../models/class");
 const parameterModel = require("../models/parameter");
 const Response = require("../utils/response");
 const { Model } = require("sequelize");
+const { QueryTypes } = require("sequelize");
+const sequelize = require("../utils/sequelize");
+
+
 
 class SubjectReportController {
   static async getSubjectReport(req, res, next) {
@@ -23,12 +27,6 @@ class SubjectReportController {
         },
       });
 
-      //get the pass subject score
-      const passedSubjectScore = await parameterModel.findOne({
-        where: {
-          name: "PassingScore",
-        },
-      });
       if (subjectReportDb) {
         //find the subject report details
         const subjectReportDetailDb = await subjectReportDetail.findAll({
@@ -44,58 +42,55 @@ class SubjectReportController {
         );
       }
 
-      //create report
-      const classRatio = {};
 
-      const subjectScoresDb = await subjectScore.findAll({
+      //get the pass subject score
+      const passedSubjectScore = await parameterModel.findOne({
         where: {
-          SubjectIdSubject: subjectId,
+          name: "PassingScore",
         },
       });
-      for (let i = 0; i < subjectScoresDb.length; i++) {
-        const progressId = subjectScoresDb[i].ProgressIdProgress;
-        //get subject score
-        const score = subjectScoresDb[i].avgScore;
+     
 
-        //find in progress table
-        const progressRecord = await progress.findOne({
-          where: {
-            idProgress: progressId,
-          },
-        });
-        const classId = progressRecord.ClassIdClass;
-        if (classRatio.hasOwnProperty(classId)) {
-          if (score > passedSubjectScore.value) classRatio[classId]++;
-        } else {
-          if (score > passedSubjectScore.value) classRatio[classId] = 1;
-        }
-      }
-
-      //save the report
+      // //save the report
       const subjectReportSaved = await subjectReport.create({
         SemesterIdSemester: semesterId,
         SubjectIdSubject: subjectId,
       });
 
-      const result = [];
-      if (subjectReportSaved) {
-        //create model
-        for (let key in classRatio) {
-          //find class
-          const classDb = await classModel.findByPk(key);
-          // get class student number
-          const studentNumber = await classDb.number;
-          const ratio = ((classRatio[key] / studentNumber) * 100).toFixed(2);
-          result.push({
-            SubjectReportIdSR: subjectReportSaved.idSR,
-            ClassIdClass: key,
-            passedNumber: classRatio[key],
-            ratio: ratio,
-          });
-        }
-      }
-      const response = await subjectReportDetail.bulkCreate(result);
-      return res.status(200).json(Response.successResponse(response));
+      
+     const results = await sequelize.query(
+       `SELECT p.ClassIdClass, c.number, COUNT(p.StudentIdStudent) as passedNumber 
+        FROM subjectscore ss, progress p, class c
+        WHERE ss.ProgressIdProgress = p.idProgress 
+          and c.idClass = p.ClassIdClass
+          and ss.SubjectIdSubject = ${subjectId} 
+          and p.SemesterIdSemester = ${semesterId} 
+          and ss.avgScore >= ${passedSubjectScore.value}
+        Group by p.ClassIdClass`,
+       { type: QueryTypes.SELECT }
+     );
+
+     const subjectReportDetailModels = []
+     for (let i = 0; i<results.length;i++){
+        const item = {
+          SubjectReportIdSR: subjectReportSaved.idSR,
+          ClassIdClass: results[i].ClassIdClass,
+          passedNumber: results[i].passedNumber,
+          ratio: ((results[i].passedNumber / results[i].number) * 100).toFixed(
+            2
+          ),
+        };
+        subjectReportDetailModels.push(item);
+     }
+      const responseReportDetailDB = await await subjectReportDetail.bulkCreate(
+        subjectReportDetailModels
+      );
+      return res.status(200).json(
+        Response.successResponse({
+          subjectReportSaved,
+          detail: responseReportDetailDB,
+        })
+      );
     } catch (e) {
       console.log(e.message);
       return res.status(404).json(Response.errorResponse(e.message));
