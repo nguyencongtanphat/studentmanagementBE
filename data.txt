@@ -4,8 +4,13 @@ INSERT INTO Teacher (`idTeacher`, `fullName`, `address`, `dayOfBirth`, `gender`,
 INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Nguyễn Văn A', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan@gmail.com');
 INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị B', 'quận cam', '2002-10-15', 'Nam', 'nguyencongtan1@gmail.com');
 INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị C', 'quận cam', '2002-10-15', 'Nữ', 'nguyencongtan2@gmail.com');
+INSERT INTO `Student` (`idStudent`, `fullName`, `address`, `dayOfBirth`, `gender`, `Email`) VALUES (NULL, 'Trần Thị D', 'quận cam', '2002-10-16', 'Nữ', 'nguyencongtan3@gmail.com');
 INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A2', 30);
 INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '10A3', 39);
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '11A2', 34);
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '11A3', 37);
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '12A2', 40);
+INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '12A3', 32);
 
 
 INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'MinAge', 16);
@@ -33,3 +38,8 @@ INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '15 minutes
 INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '1 session', 2);
 INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'middle session', 3);
 INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'final session', 4);
+
+INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 4.9, 2, 2, 1);
+INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 5.1, 1, 1, 1);
+INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 5.2, 1, 3, 1);
+INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 7, 3, 4, 1);
