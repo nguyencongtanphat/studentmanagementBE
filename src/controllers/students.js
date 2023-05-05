@@ -3,52 +3,21 @@ const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
 const Response = require("../utils/response");
 const Class = require("../models/class");
-
+const { QueryTypes } = require("sequelize");
+const sequelize = require("../utils/sequelize");
 
 
 class studentController {
   static async getAllStudents(req, res, next) {
     try {
-      const query = {
-        where: {},
-        include:[]
-      };
-
-      
-      if (req.query.fullName) {
-        // Check if each query parameter is present and add it to the query
-        query.where.fullName = req.query.fullName;
-      } 
-      
-      if(req.query.className){
-        query.include.push({
-          model: Class,
-          where: {
-            name: req.query.className,
-          },
-        });
-      }
-
-      if(req.query.classId){
-        query.include.push({
-          model: Class,
-          where:{
-            idClass:req.query.classId,
-          }
-        });
-      }
-
-      if (req.query.semesterId) {
-        query.include.push({
-          model: semesterModel,
-          where: {
-            idSemester: req.query.semesterId,
-          },
-        });
-      }
-      
-
-      const students = await studentModel.findAll(query);
+    
+      //const students = await studentModel.findAll(query);
+      const students = await sequelize.query(
+        `SELECT * FROM student s, progress p, class c
+        where s.idStudent = p.StudentIdStudent
+        and p.ClassIdClass = c.idClass
+        `
+      )
       if (!students) {
         throw "Something went wrong please wait a minute and try again";
       }
