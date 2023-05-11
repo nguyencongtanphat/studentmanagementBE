@@ -6,27 +6,23 @@ const Class = require("../models/class");
 const { QueryTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-
 class studentController {
   static async getAllStudents(req, res, next) {
     try {
-      //get current semester
-      const currentSemesterId = await parameterModel.findOne({
-        where: {
-          name: "CurrentSemesterId",
-        },
-      });
-      console.log("Current semester:", currentSemesterId.value)
-      //const students = await studentModel.findAll();
-      const students = await sequelize.query(
-        `SELECT DISTINCT  c.name FROM Student s, Progress p, Class c
-        where s.idStudent = p.StudentIdStudent
-        and p.ClassIdClass = c.idClass
-        and p.SemesterIdSemester = 1
-        `
-      );
+      const isGetClass = req.query.isGetClass;
+      let students = await studentModel.findAll();
       if (!students) {
         throw "Something went wrong please wait a minute and try again";
+      }
+      if (isGetClass) {
+        let newStudents = [];
+        for (let i = 0; i < students.length; i++) {
+          //find the class of a student
+          const classStudent = await students[i].getClasses();
+          const classNames = classStudent.map((classObj) => classObj.name);
+          newStudents.push({ ...students[i]["dataValues"], classNames });
+        }
+        students = newStudents;
       }
       return res.status(200).json(Response.successResponse(students));
     } catch (err) {
@@ -40,7 +36,7 @@ class studentController {
       //find the student
       const student = await studentModel.findByPk(id);
       //find all the class students learn
-      const classStudent =await student.getClasses();
+      const classStudent = await student.getClasses();
       const classNames = classStudent.map((classObj) => classObj.name);
       console.log("class: ", classStudent);
 
@@ -82,11 +78,11 @@ class studentController {
     try {
       const id = req.params.id;
       const student = await studentModel.findByPk(id);
-      
+
       if (!student) {
         throw Error("Student not found");
       }
-      student.set(req.body)
+      student.set(req.body);
       const response = await student.save();
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
