@@ -11,13 +11,13 @@ class studentController {
   static async getAllStudents(req, res, next) {
     try {
     
-      //const students = await studentModel.findAll(query);
-      const students = await sequelize.query(
-        `SELECT * FROM student s, progress p, class c
-        where s.idStudent = p.StudentIdStudent
-        and p.ClassIdClass = c.idClass
-        `
-      )
+      const students = await studentModel.findAll();
+      // const students = await sequelize.query(
+      //   `SELECT * FROM student s, progress p, class c
+      //   where s.idStudent = p.StudentIdStudent
+      //   and p.ClassIdClass = c.idClass
+      //   `
+      // )
       if (!students) {
         throw "Something went wrong please wait a minute and try again";
       }
