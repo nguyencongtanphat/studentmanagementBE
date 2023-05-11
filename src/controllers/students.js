@@ -10,14 +10,21 @@ const sequelize = require("../utils/sequelize");
 class studentController {
   static async getAllStudents(req, res, next) {
     try {
-    
-      //const students = await studentModel.findAll(query);
+      //get current semester
+      const currentSemesterId = await parameterModel.findOne({
+        where: {
+          name: "CurrentSemesterId",
+        },
+      });
+      console.log("Current semester:", currentSemesterId.value)
+      //const students = await studentModel.findAll();
       const students = await sequelize.query(
-        `SELECT * FROM student s, progress p, class c
+        `SELECT DISTINCT  c.name FROM Student s, Progress p, Class c
         where s.idStudent = p.StudentIdStudent
         and p.ClassIdClass = c.idClass
+        and p.SemesterIdSemester = 1
         `
-      )
+      );
       if (!students) {
         throw "Something went wrong please wait a minute and try again";
       }
