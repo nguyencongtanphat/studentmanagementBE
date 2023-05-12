@@ -37,21 +37,6 @@ const addStudentToClass = async (
 class classController {
   static async getAllClasses(req, res, next) {
     try {
-      // const query = {
-      //   where: {},
-      //   include:[]
-      // };
-
-      // if (req.query.semesterId){
-      //   query.include.push({
-      //     model: semesterModel,
-      //     where:{
-      //       idSemester: req.query.semesterId
-      //     }
-      //   });
-      // }
-
-      // const classes = await classModel.findOne(query);
       const conditionIdSemester = req.query.semesterId
         ? `and s.idSemester=${req.query.semesterId}`
         : "";
@@ -181,4 +166,5 @@ class classController {
   }
 }
 
-module.exports = classController;
+module.exports = { addStudentToClass, classController };
+

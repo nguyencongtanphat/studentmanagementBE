@@ -1,10 +1,12 @@
 const studentModel = require("../models/student");
 const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
+const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 const Class = require("../models/class");
 const { QueryTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
+const { addStudentToClass } = require("./classes");
 
 class studentController {
   static async getAllStudents(req, res, next) {
@@ -64,14 +66,28 @@ class studentController {
       const newStudent = studentModel.build({
         fullName: req.body.fullName,
         address: req.body.address,
-        dayOfBirth: new Date(req.body.dateOfBirth.slice(0,10)),
+        dayOfBirth: new Date(req.body.dateOfBirth.slice(0, 10)),
         gender: req.body.gender,
         Email: req.body.Email,
       });
-      
-      const response = await newStudent.save();
-      
-      return res.status(200).json(Response.successResponse(response));
+      //create student
+      const studentReponse = await newStudent.save();
+      //add student to class
+      //1. find teacher id
+      const teacherId = await progressModel.findOne({
+        where: {
+          SemesterIdSemester: req.body.currentSemesterId,
+          ClassIdClass: req.body.classId,
+        },
+      });
+      console.log("teacher Id", teacherId.TeacherIdTeacher);
+      const result = await addStudentToClass(
+        req.body.classId,
+        [studentReponse.idStudent],
+        req.body.currentSemesterId,
+        teacherId.TeacherIdTeacher
+      );
+      return res.status(200).json(Response.successResponse(result));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
