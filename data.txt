@@ -13,12 +13,6 @@ INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '12A2', 40);
 INSERT INTO `Class` (`idClass`, `name`, `number`) VALUES(NULL, '12A3', 32);
 
 
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'MinAge', 16);
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'MaxAge', 18);
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'MaxQuantity', 40);
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'SubjectPassingScore', 5);
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'PassingScore', 5);
-INSERT INTO `Parameter` (`idParameter`, `name`, `value`) VALUES(NULL, 'CurrentSemesterId', 4);
 
 INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '1', '2020')
 INSERT INTO `Semester` (`idSemester`, `order`, `year`) VALUES(NULL, '2', '2019')
@@ -34,10 +28,10 @@ INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 10);
 INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 11);
 INSERT INTO `Grade` (`idGrade`, `name`) VALUES(NULL, 12);
 
-INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '15 minutes', 1);
-INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '1 session', 2);
-INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'middle session', 3);
-INSERT INTO `test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'final session', 4);
+INSERT INTO `Test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '15 minutes', 1);
+INSERT INTO `Test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, '1 session', 2);
+INSERT INTO `Test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'middle session', 3);
+INSERT INTO `Test` (`idTest`, `testName`, `coefficent`) VALUES(NULL, 'final session', 4);
 
 INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 4.9, 2, 2, 1);
 INSERT INTO `Progress` (`idProgress`, `avgSemScore`, `ClassIdClass`, `StudentIdStudent`, `SemesterIdSemester`) VALUES(NULL, 5.1, 1, 1, 1);
