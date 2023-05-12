@@ -59,13 +59,16 @@ class studentController {
 
   static async createStudent(req, res, next) {
     try {
+      console.log("body:", req.body);
+      console.log("date type:", req.body.dateOfBirth);
       const newStudent = studentModel.build({
         fullName: req.body.fullName,
         address: req.body.address,
-        dayOfBirth: req.body.dayOfBirth,
+        dayOfBirth: new Date(req.body.dateOfBirth.slice(0,10)),
         gender: req.body.gender,
         Email: req.body.Email,
       });
+      
       const response = await newStudent.save();
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
