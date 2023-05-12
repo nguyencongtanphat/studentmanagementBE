@@ -70,6 +70,7 @@ class studentController {
       });
       
       const response = await newStudent.save();
+      
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
       console.log("catch err:", err);
