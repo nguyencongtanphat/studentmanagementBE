@@ -1,25 +1,30 @@
 const studentModel = require("../models/student");
 const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
+const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 const Class = require("../models/class");
 const { QueryTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
-
+const { addStudentToClass } = require("./classes");
 
 class studentController {
   static async getAllStudents(req, res, next) {
     try {
-    
-      const students = await studentModel.findAll();
-      // const students = await sequelize.query(
-      //   `SELECT * FROM student s, progress p, class c
-      //   where s.idStudent = p.StudentIdStudent
-      //   and p.ClassIdClass = c.idClass
-      //   `
-      // )
+      const isGetClass = req.query.isGetClass;
+      let students = await studentModel.findAll();
       if (!students) {
         throw "Something went wrong please wait a minute and try again";
+      }
+      if (isGetClass) {
+        let newStudents = [];
+        for (let i = 0; i < students.length; i++) {
+          //find the class of a student
+          const classStudent = await students[i].getClasses();
+          const classNames = classStudent.map((classObj) => classObj.name);
+          newStudents.push({ ...students[i]["dataValues"], classNames });
+        }
+        students = newStudents;
       }
       return res.status(200).json(Response.successResponse(students));
     } catch (err) {
@@ -33,7 +38,7 @@ class studentController {
       //find the student
       const student = await studentModel.findByPk(id);
       //find all the class students learn
-      const classStudent =await student.getClasses();
+      const classStudent = await student.getClasses();
       const classNames = classStudent.map((classObj) => classObj.name);
       console.log("class: ", classStudent);
 
@@ -56,15 +61,33 @@ class studentController {
 
   static async createStudent(req, res, next) {
     try {
+      console.log("body:", req.body);
+      console.log("date type:", req.body.dateOfBirth);
       const newStudent = studentModel.build({
         fullName: req.body.fullName,
         address: req.body.address,
-        dayOfBirth: req.body.dayOfBirth,
+        dayOfBirth: new Date(req.body.dateOfBirth.slice(0, 10)),
         gender: req.body.gender,
         Email: req.body.Email,
       });
-      const response = await newStudent.save();
-      return res.status(200).json(Response.successResponse(response));
+      //create student
+      const studentReponse = await newStudent.save();
+      //add student to class
+      //1. find teacher id
+      const teacherId = await progressModel.findOne({
+        where: {
+          SemesterIdSemester: req.body.currentSemesterId,
+          ClassIdClass: req.body.classId,
+        },
+      });
+      console.log("teacher Id", teacherId.TeacherIdTeacher);
+      const result = await addStudentToClass(
+        req.body.classId,
+        [studentReponse.idStudent],
+        req.body.currentSemesterId,
+        teacherId.TeacherIdTeacher
+      );
+      return res.status(200).json(Response.successResponse(result));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -75,11 +98,11 @@ class studentController {
     try {
       const id = req.params.id;
       const student = await studentModel.findByPk(id);
-      
+
       if (!student) {
         throw Error("Student not found");
       }
-      student.set(req.body)
+      student.set(req.body);
       const response = await student.save();
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
