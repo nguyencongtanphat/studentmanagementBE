@@ -14,7 +14,7 @@ Class.init(
       type: DataTypes.STRING,
       require: true,
     },
-    number: {
+    idGrade: {
       type: DataTypes.INTEGER,
       require: true,
     },

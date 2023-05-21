@@ -62,32 +62,26 @@ class studentController {
   static async createStudent(req, res, next) {
     try {
       console.log("body:", req.body);
-      console.log("date type:", req.body.dateOfBirth);
+      
       const newStudent = studentModel.build({
         fullName: req.body.fullName,
         address: req.body.address,
-        dayOfBirth: new Date(req.body.dateOfBirth.slice(0, 10)),
+        dayOfBirth: new Date(req.body.dayOfBirth.slice(0, 10)),
         gender: req.body.gender,
         Email: req.body.Email,
       });
       //create student
       const studentReponse = await newStudent.save();
       //add student to class
-      //1. find teacher id
-      const teacherId = await progressModel.findOne({
+      //1. GET current semester id
+      const currentSemesterId = parameterModel.findOne({
         where: {
-          SemesterIdSemester: req.body.currentSemesterId,
-          ClassIdClass: req.body.classId,
+          name: "current semester id",
         },
       });
-      console.log("teacher Id", teacherId.TeacherIdTeacher);
-      const result = await addStudentToClass(
-        req.body.classId,
-        [studentReponse.idStudent],
-        req.body.currentSemesterId,
-        teacherId.TeacherIdTeacher
-      );
-      return res.status(200).json(Response.successResponse(result));
+
+      
+      return res.status(200).json(Response.successResponse(studentReponse));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
