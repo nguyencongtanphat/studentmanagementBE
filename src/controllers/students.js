@@ -1,7 +1,7 @@
 const studentModel = require("../models/student");
 const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
-const progressModel = require("../models/progress");
+const progressModel = require("../models/studentprogress");
 const Response = require("../utils/response");
 const Class = require("../models/class");
 const { QueryTypes } = require("sequelize");

@@ -1,5 +1,5 @@
 const { query } = require('express');
-const progressModel = require('../models/progress');
+const progressModel = require('../models/studentprogress');
 const Response = require('../utils/response');
 const sequelize = require('../utils/sequelize');
 const semesterReportModel = require('../models/semesterReport');

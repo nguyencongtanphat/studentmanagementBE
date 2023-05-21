@@ -16,6 +16,10 @@ Class.init(
     },
     idGrade: {
       type: DataTypes.INTEGER,
+      references: {
+        model: "Grade",
+        key: "idGrade",
+      },
       require: true,
     },
   },

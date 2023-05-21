@@ -5,10 +5,26 @@ class SubjectScore extends Model {}
 
 SubjectScore.init(
   {
-    idSS: {
+    idSubjectScore: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+    },
+    idStudentProgress: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "StudentProgress",
+        key: "idStudentProgress",
+      },
+      require: true,
+    },
+    idSubject: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Subject",
+        key: "idSubject",
+      },
+      require: true,
     },
     avgScore: {
       type: DataTypes.FLOAT(4, 2),
