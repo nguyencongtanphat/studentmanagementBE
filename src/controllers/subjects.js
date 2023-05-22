@@ -22,7 +22,7 @@ class subjectController {
       const subject_ = await subjectModel.findByPk(req.params.id);
       if (!subject_) {
         throw new Error(
-          "Something went wrong please wait a minute and try again"
+          "Subject not exist"
         );
       }
       return res.status(200).json(Response.successResponse(subject_));
@@ -34,6 +34,16 @@ class subjectController {
 
   static async createSubject(req, res, next) {
     try {
+      const {name, idTeacher} = req.body;
+
+      //check name subject is exist
+      const subjectDb = await subjectModel.findOne({
+        where:{
+          name:name
+        }
+      })
+
+      
       const newSubject = subjectModel.build({
         idSubject: req.body.idSubject,
         name: req.body.name,

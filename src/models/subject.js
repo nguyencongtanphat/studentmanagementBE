@@ -14,13 +14,7 @@ Subject.init(
       type: DataTypes.STRING,
       require: true,
     },
-    idTeacher: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Teacher",
-        key: "idTeacher",
-      },
-    },
+    
   },
   { sequelize, modelName: "Subject" }
 );

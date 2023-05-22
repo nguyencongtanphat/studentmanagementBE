@@ -6,4 +6,5 @@ const parameterController = require("../controllers/parameters");
 route.get("/", parameterController.getParameters);
 
 
+
 module.exports = route;
