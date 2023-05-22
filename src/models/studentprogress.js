@@ -20,7 +20,15 @@ StudentProgress.init(
         model: "Student",
         key: "idStudent",
       },
-      require: true
+      require: true,
+    },
+    idClassSemester:{
+      type: DataTypes.INTEGER,
+      require: true,
+      references: {
+        model: "ClassSemester",
+        key: "idClassSemester",
+      }
     },
   },
   { sequelize, modelName: "StudentProgress" }

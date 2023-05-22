@@ -19,11 +19,13 @@ const semesterReportRoute = require('./src/routes/semesterReport')
 const subjectReportRoute = require("./src/routes/subjectReport");
 const parametersRoute = require('./src/routes/parameters')
 const subjectsRoute = require("./src/routes/subject")
+const classSemesterRoute = require("./src/routes/classSemester")
 
 app.use("/subject-report", subjectReportRoute);
 app.use("/subjects", subjectsRoute);
 app.use("/students", studentsRoute);
 app.use("/classes", classesRoute);
+app.use("/classes-semester", classSemesterRoute);
 app.use("/teachers", teacherRoute);
 app.use("/semesters", semesterRoute);
 app.use("/grades", gradeRoute);
