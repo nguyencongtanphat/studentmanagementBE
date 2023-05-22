@@ -14,8 +14,12 @@ Class.init(
       type: DataTypes.STRING,
       require: true,
     },
-    number: {
+    idGrade: {
       type: DataTypes.INTEGER,
+      references: {
+        model: "Grade",
+        key: "idGrade",
+      },
       require: true,
     },
   },

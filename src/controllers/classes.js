@@ -1,55 +1,41 @@
 const { query } = require("express");
 const classModel = require("../models/class");
-const teacherModel = require("../models/teacher");
-const studentModel = require("../models/student");
-const semesterModel = require("../models/semester");
-const progressModel = require("../models/progress");
 const Response = require("../utils/response");
 const sequelize = require("../utils/sequelize");
 const { QueryTypes } = require("sequelize");
 
-const addStudentToClass = async (
-  classId,
-  listStudentId,
-  semesterId,
-  teacherId
-) => {
-  try {
-    // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
-    const progressInstances = listStudentId.map((studentId) => {
-      return {
-        StudentIdStudent: studentId,
-        ClassIdClass: classId,
-        SemesterIdSemester: semesterId,
-        TeacherIdTeacher: teacherId,
-      };
-    });
+// const addStudentToClass = async (classId, listStudentId, semesterId) => {
+//   try {
+//     // create array of QuaTrinhHoc instances with HocSinhMaHS, LopMaLop, HOCKYMaHK, and GiaoVienMaGV fields
+//     const progressInstances = listStudentId.map((studentId) => {
+//       return {
+//         StudentIdStudent: studentId,
+//         ClassIdClass: classId,
+//         SemesterIdSemester: semesterId,
+//         TeacherIdTeacher: teacherId,
+//       };
+//     });
 
-    const result = await progressModel.bulkCreate(progressInstances);
-    if (result.length === progressInstances.length) return "success";
-    else return "fail";
-  } catch (err) {
-    console.log("err while creating progress add student to class");
-    throw Error(err);
-  }
-};
+//     const result = await progressModel.bulkCreate(progressInstances);
+//     if (result.length === progressInstances.length) return "success";
+//     else return "fail";
+//   } catch (err) {
+//     console.log("err while creating progress add student to class");
+//     throw Error(err);
+//   }
+// };
 
 class classController {
-  static async getAllClasses(req, res, next) {
+  //done
+  static async getAllClassesList(req, res, next) {
     try {
-      const conditionIdSemester = req.query.semesterId
-        ? `and s.idSemester=${req.query.semesterId}`
-        : "";
       const classes = await sequelize.query(
-        `SELECT DISTINCT c.idClass, c.name
-        FROM class c, progress p, semester s
-        WHERE c.idClass = p.ClassIdClass
-          and s.idSemester = p.SemesterIdSemester
-          ${conditionIdSemester}`,
+        `SELECT *
+        FROM class 
+        `,
         { type: QueryTypes.SELECT }
       );
       console.log("class:", classes);
-
       return res.status(200).json(Response.successResponse(classes));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -58,59 +44,60 @@ class classController {
 
   static async getClassById(req, res, next) {
     try {
-      const class_ = await classModel.findByPk(req.params.id);
-      if (!class_) {
-        throw new Error("Something went wrong");
-      }
-      return res.status(200).json(Response.successResponse(class_));
+      const idClass = req.params.id;
+      console.log("id Class: ", idClass);
+      const classes = await sequelize.query(
+        `SELECT *
+        FROM class 
+        WHERE idClass = ${idClass}
+        `,
+        { type: QueryTypes.SELECT }
+      );
+      console.log("class:", classes);
+      return res.status(200).json(Response.successResponse(classes[0]));
     } catch (err) {
-      console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
 
-  static async createClass(req, res, next) {
+  static async createNewClass(req, res, next) {
     try {
-      const { className, teacherId, semesterId, idStudentList } = req.body;
-      //check class is already exists
-      const classCheck = await classModel.findOne({
-        where: {
-          name: className,
-        },
-        include: [
-          {
-            model: semesterModel,
-            where: {
-              idSemester: semesterId,
-            },
-            through: {
-              model: progressModel,
-              attributes: [],
-            },
-          },
-        ],
-      });
+      const { className, idGrade } = req.body;
+      //check is classname already exists
+      const classdb = await sequelize.query(
+        `SELECT *
+        FROM class 
+        WHERE name = "${className}"
+        `,
+        { type: QueryTypes.SELECT }
+      );
 
-      console.log("class check:", classCheck);
-      if (classCheck) {
-        throw new Error("class is existing");
-      } else {
-        //create class
-        const newClass = classModel.build({
-          name: className,
-          number: idStudentList.length,
-        });
-        const responseNewClass = await newClass.save();
-        //add student to class
-        const result = await addStudentToClass(
-          responseNewClass.idClass,
-          idStudentList,
-          semesterId,
-          teacherId
-        );
-        console.log("result:", result);
-        return res.status(200).json(Response.successResponse(result));
+      if (classdb.length > 0) {
+        throw new Error("class name already exists");
       }
+
+      const response = await sequelize.query(
+        `INSERT INTO class (idClass, name, idGrade ) VALUES(NULL, "${className}", ${idGrade});`,
+        { type: QueryTypes.INSERT }
+      );
+      return res.status(200).json(Response.successResponse(response[0]));
+    } catch (err) {
+      return res.status(404).json(Response.errorResponse(404, err.message));
+    }
+  }
+
+  static async deleteClassById(req, res, next) {
+    try {
+      const idClass = req.params.id;
+      console.log("id Class: ", idClass);
+      const response = await sequelize.query(
+        `DELETE
+        FROM class 
+        WHERE idClass = ${idClass}
+        `,
+        { type: QueryTypes.DELETE }
+      );
+      return res.status(200).json(Response.successResponse(response));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -133,38 +120,7 @@ class classController {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
-  static async deleteClassById(req, res, next) {
-    try {
-      let qry = {
-        where: {},
-      };
-      qry.where.idClass = req.params.id;
-      const response = await classModel.destroy(qry);
-      if (!response) throw "can't connect with database";
-      return res.status(200).json(Response.successResponse(response));
-    } catch (err) {
-      console.log("catch err:", err);
-      return res.status(404).json(Response.errorResponse(404, err.message));
-    }
-  }
 
-  static async addStudentToClassApi(req, res, next) {
-    try {
-      const { classId, listStudentId, idSemester, teacherId } = req.body;
-      //find teacher id through classId
-      const result = await addStudentToClass(
-        classId,
-        listStudentId,
-        idSemester,
-        teacherId
-      );
-      console.log("result ", result);
-      return res.status(200).json(Response.successResponse(result));
-    } catch (err) {
-      return res.status(404).json(Response.errorResponse(404, err.message));
-    }
-  }
 }
 
-module.exports = { addStudentToClass, classController };
-
+module.exports =  classController ;

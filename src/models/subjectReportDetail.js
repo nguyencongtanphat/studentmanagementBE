@@ -6,11 +6,27 @@ class SubjectReportDetail extends Model {}
 
 SubjectReportDetail.init(
   {
-    idSRD: {
+    idSubjectReportDetail: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
+    },
+    idSubjectReport: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "SubjectReport",
+        key: "idSubjectReport",
+      },
+      require: true,
+    },
+    idClassSemester: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "ClassSemester",
+        key: "idClassSemester",
+      },
+      require: true,
     },
     passedNumber: {
       type: DataTypes.INTEGER,

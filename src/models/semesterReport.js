@@ -5,11 +5,18 @@ class SemesterReport extends Model {}
 
 SemesterReport.init(
   {
-    passedNumber: {
+    idSemesterReport: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    ratio: {
-      type: DataTypes.DECIMAL(3, 2),
+    idSemester: {
+      type: DataTypes.INTEGER,
+      require: true,
+      references: {
+        model: "Semester",
+        key: "idSemester",
+      },
     },
   },
   { sequelize, modelName: "SemesterReport" }

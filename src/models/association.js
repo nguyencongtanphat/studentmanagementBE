@@ -1,5 +1,5 @@
 const student = require("./student");
-const progress = require("./progress");
+const progress = require("./studentprogress");
 const grade = require("./grade");
 const Class = require("./class");
 const semester = require("./semester");

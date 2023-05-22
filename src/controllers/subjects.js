@@ -22,7 +22,7 @@ class subjectController {
       const subject_ = await subjectModel.findByPk(req.params.id);
       if (!subject_) {
         throw new Error(
-          "Something went wrong please wait a minute and try again"
+          "Subject not exist"
         );
       }
       return res.status(200).json(Response.successResponse(subject_));
@@ -34,10 +34,20 @@ class subjectController {
 
   static async createSubject(req, res, next) {
     try {
+      const {name} = req.body;
+
+      //check name subject is exist
+      const subjectDb = await subjectModel.findOne({
+        where:{
+          name:name
+        }
+      })
+      if(subjectDb){
+        throw new Error("Subject is already exist")
+      }
+      
       const newSubject = subjectModel.build({
-        idSubject: req.body.idSubject,
-        name: req.body.name,
-        coefficent: req.body.coefficent,
+        name: name,
       });
       const response = await newSubject.save();
       return res.status(200).json(Response.successResponse(response));
@@ -63,6 +73,7 @@ class subjectController {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
+
   static async deleteSubjectById(req, res, next) {
     try{
       console.log(req);
@@ -72,7 +83,7 @@ class subjectController {
       qry.where.idSubject = req.params.id
       console.log(qry);
       const response = await subjectModel.destroy(qry);
-      if(!response) throw "can't connect with database";
+      if(!response) throw new Error("delete failed");
       return res.status(200).json(Response.successResponse(response));
     }
     catch(err){
