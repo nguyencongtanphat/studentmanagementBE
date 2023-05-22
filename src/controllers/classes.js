@@ -120,6 +120,7 @@ class classController {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
+
 }
 
 module.exports =  classController ;
