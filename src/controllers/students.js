@@ -6,7 +6,7 @@ const Response = require("../utils/response");
 const Class = require("../models/class");
 const { QueryTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
-const { addStudentToClass } = require("./classes");
+const { addStudentsToClassSemester } = require("./classSemester");
 
 class studentController {
   static async getAllStudents(req, res, next) {
@@ -73,15 +73,12 @@ class studentController {
       //create student
       const studentReponse = await newStudent.save();
       //add student to class
-      //1. GET current semester id
-      const currentSemesterId = parameterModel.findOne({
-        where: {
-          name: "current semester id",
-        },
-      });
-
       
-      return res.status(200).json(Response.successResponse(studentReponse));
+      addStudentsToClassSemester(
+        [studentReponse.idStudent],
+        req.body.idClassSemester
+      );
+      return res.status(200).json(Response.successResponse("success"));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
