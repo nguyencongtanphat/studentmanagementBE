@@ -116,4 +116,4 @@ class classSemesterController {
     }
   }
 }
-module.exports = classSemesterController;
+module.exports = { classSemesterController, addStudentsToClassSemester};
