@@ -6,5 +6,7 @@ const classSemesterController = require("../controllers/classSemester");
 route.get("/", classSemesterController.getAllClassesSemester);
 route.get("/:id", classSemesterController.getClassesSemesterById);
 route.post("/", classSemesterController.createClassesSemester);
+route.post("/:id", classSemesterController.addStudentsToClassSemester);
+route.delete("/:id", classSemesterController.deleteStudentsFromClassSemester);
 
 module.exports = route;
