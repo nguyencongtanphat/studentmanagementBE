@@ -83,7 +83,7 @@ class studentController {
       const studentReponse = await newStudent.save();
       //add student to class
 
-      addStudentsToClassSemester(
+      await addStudentsToClassSemester(
         [studentReponse.idStudent],
         req.body.idClassSemester
       );
