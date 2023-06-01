@@ -25,10 +25,14 @@ class classSemesterController {
       // const response = await classSemesterModel.findAll();
 
       const response = await sequelize.query(
-        `SELECT *
-        FROM classsemester cs, class c, semester s
+        `SELECT cs.*, c.*, s.*, 
+          t.fullName as teacherName, 
+          t.idTeacher, 
+          CONCAT(s.order, '-', s.year) AS semester
+        FROM classsemester cs, class c, semester s, teacher t
         WHERE cs.idClass = c.idClass
         And cs.idSemester = s.idSemester
+        And t.idTeacher = cs.idTeacher
         `,
         { type: QueryTypes.SELECT }
       );
