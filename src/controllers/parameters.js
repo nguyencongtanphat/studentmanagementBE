@@ -15,10 +15,10 @@ class parameterController {
       const rules = await parameterModel.findAll({
         where: query,
       });
-      if (rules) {
+      if (!rules) {
         throw new Error("rules not found")
       }
-      return res.status(200).json(Response.successResponse(rule));
+      return res.status(200).json(Response.successResponse(rules));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
