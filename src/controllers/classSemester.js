@@ -22,7 +22,16 @@ const addStudentsToClassSemester = async (listIdStudent, idClassSemester) => {
 class classSemesterController {
   static async getAllClassesSemester(req, res, next) {
     try {
-      const response = await classSemesterModel.findAll();
+      // const response = await classSemesterModel.findAll();
+
+      const response = await sequelize.query(
+        `SELECT *
+        FROM classsemester cs, class c, semester s
+        WHERE cs.idClass = c.idClass
+        And cs.idSemester = s.idSemester
+        `,
+        { type: QueryTypes.SELECT }
+      );
       return res.status(200).json(Response.successResponse(response));
     } catch (e) {
       return res.status(404).json(Response.errorResponse(404, err.message));

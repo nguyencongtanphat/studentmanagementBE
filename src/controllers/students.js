@@ -1,4 +1,5 @@
 const studentModel = require("../models/student");
+const classSemesterModel = require("../models/classsemester")
 const semesterModel = require("../models/semester");
 const parameterModel = require("../models/parameter");
 const progressModel = require("../models/studentprogress");
@@ -71,7 +72,6 @@ class studentController {
   static async createStudent(req, res, next) {
     try {
       console.log("body:", req.body);
-
       const newStudent = studentModel.build({
         fullName: req.body.fullName,
         address: req.body.address,
@@ -81,6 +81,7 @@ class studentController {
       });
       //create student
       const studentReponse = await newStudent.save();
+     
       //add student to class
 
       await addStudentsToClassSemester(
