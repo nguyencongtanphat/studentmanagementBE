@@ -30,8 +30,9 @@ class classController {
   static async getAllClassesList(req, res, next) {
     try {
       const classes = await sequelize.query(
-        `SELECT *
-        FROM class 
+        `SELECT class.*, grade.name
+        FROM class, grade
+        WHERE class.idGrade = grade.idGrade
         `,
         { type: QueryTypes.SELECT }
       );
