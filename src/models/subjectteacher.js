@@ -1,34 +1,33 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/sequelize");
 
-class SubjectReport extends Model {}
+class SubjectTeacher extends Model {}
 
-SubjectReport.init(
+SubjectTeacher.init(
   {
-    idSubjectReport: {
+    idSubjectTeacher: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
     },
     idSubject: {
       type: DataTypes.INTEGER,
+      require: true,
       references: {
         model: "Subject",
         key: "idSubject",
       },
-      require: true,
     },
-    idSemester:{
+    idTeacher: {
       type: DataTypes.INTEGER,
       require: true,
       references: {
-        model: "Semester",
-        key: "idSemester",
-      }
-    }
+        model: "Teacher",
+        key: "idTeacher",
+      },
+    },
   },
-  { sequelize, modelName: "SubjectReport" }
+  { sequelize, modelName: "SubjectTeacher" }
 );
 
-module.exports = SubjectReport;
+module.exports = SubjectTeacher;

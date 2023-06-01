@@ -1,4 +1,4 @@
-const progressModel = require("../models/progress");
+const progressModel = require("../models/studentprogress");
 const subjectScoreModel = require("../models/subjectScore");
 const subjectScoreDetailModel = require("../models/subjectScoreDetail");
 const subjectModel = require("../models/subject");

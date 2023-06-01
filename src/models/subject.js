@@ -14,11 +14,7 @@ Subject.init(
       type: DataTypes.STRING,
       require: true,
     },
-    coefficent: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-   
+    
   },
   { sequelize, modelName: "Subject" }
 );

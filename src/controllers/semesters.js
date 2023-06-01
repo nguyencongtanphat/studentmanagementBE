@@ -18,12 +18,10 @@ class semesterController {
 
   static async getSemesterById(req, res, next) {
     try {
-      console.log('id of request id: ', req.params.id);
+      console.log("id of request id: ", req.params.id);
       const semester_ = await semesterModel.findByPk(req.params.id);
       if (!semester_) {
-        throw new Error(
-          "Something went wrong please wait a minute and try again"
-        );
+        throw new Error("semester not exist");
       }
       return res.status(200).json(Response.successResponse(semester_));
     } catch (err) {
@@ -34,10 +32,20 @@ class semesterController {
 
   static async createSemester(req, res, next) {
     try {
+      const { order, year } = req.body;
+
+      const semesterDb = await semesterModel.findOne({
+        where: {
+          order: order,
+          year: year,
+        },
+      });
+      if(semesterDb){
+        throw new Error("this semester is existing")
+      }
       const newSemester = semesterModel.build({
-        idSemester: req.body.idSemester,
-        order: req.body.order,
-        year: req.body.year,
+        order: order,
+        year: year,
       });
       const response = await newSemester.save();
       return res.status(200).json(Response.successResponse(response));
@@ -51,11 +59,11 @@ class semesterController {
     try {
       const id = req.params.id;
       const semester_ = await semesterModel.findByPk(id);
-      
+
       if (!semester_) {
         throw Error("Semester not found");
       }
-      semester_.set(req.body)
+      semester_.set(req.body);
       const response = await semester_.save();
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
@@ -64,23 +72,21 @@ class semesterController {
     }
   }
   static async deleteSemesterById(req, res, next) {
-    try{
+    try {
       console.log(req);
       let qry = {
         where: {},
-      }
-      qry.where.idSemester = req.params.id
+      };
+      qry.where.idSemester = req.params.id;
       console.log(qry);
       const response = await semesterModel.destroy(qry);
-      if(!response) throw "can't connect with database";
+      if (!response) throw "can't connect with database";
       return res.status(200).json(Response.successResponse(response));
-    }
-    catch(err){
+    } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
-
 }
 
 module.exports = semesterController;
