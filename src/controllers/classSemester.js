@@ -44,8 +44,34 @@ class classSemesterController {
   static async getClassesSemesterById(req, res, next) {
     try {
       const id = req.params.id;
-      const classSemester = await classSemesterModel.findByPk(id);
-      if (!classSemester) throw new Error("class is not found");
+      let response = {};
+      const classInfo = await sequelize.query(
+        `SELECT cs.*, c.name as className, c.idClass, s.*, 
+          t.fullName as teacherName, 
+          t.idTeacher, 
+          CONCAT(s.order, '-', s.year) AS semester
+        FROM classsemester cs, class c, semester s, teacher t
+        WHERE cs.idClass = c.idClass
+        And cs.idSemester = s.idSemester
+        And t.idTeacher = cs.idTeacher
+        And cs.idClassSemester = ${id}
+        `,
+        { type: QueryTypes.SELECT }
+      );
+
+      if (!classInfo) throw new Error("class is not found");
+      response.classInfo = classInfo[0];
+      //query student
+      const studentsList = await sequelize.query(
+        `
+        SELECT *
+        FROM studentprogress sp, student s
+        WHERE sp.idClassSemester = ${id}
+        And sp.idStudent = s.idStudent
+        `,
+        { type: QueryTypes.SELECT }
+      );
+      response.studentsList = studentsList;
       return res.status(200).json(Response.successResponse(response));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
@@ -85,6 +111,32 @@ class classSemesterController {
     }
   }
 
+  static async updateClassesSemester(req, res, next) {
+    try {
+      const idClassSemester = req.params.id;
+      const classSemesterdb = await classSemesterModel.findByPk(
+        idClassSemester
+      );
+      //update classSemester
+      classSemesterdb.update(req.body)
+      //delete 
+      await studentProgressModel.destroy({
+        where: {
+          idClassSemester: idClassSemester,
+        },
+      });
+      //add student
+      await addStudentsToClassSemester(
+        req.body.listIdStudent,
+        idClassSemester
+      );
+      console.log("body data: ", req.body);
+      return res.status(200).json(Response.successResponse("success"));
+      // await classSemesterdb.update(req.body)
+    } catch (err) {
+      return res.status(404).json(Response.errorResponse(404, err.message));
+    }
+  }
   static async addStudentsToClassSemester(req, res, next) {
     try {
       const idClassSemester = req.params.id;
@@ -107,14 +159,14 @@ class classSemesterController {
     try {
       const idClassSemester = req.params.id;
       const idStudent = req.body.idStudent;
-      console.log("delete students from:", idClassSemester, idStudent)
+      console.log("delete students from:", idClassSemester, idStudent);
       //check class semesters is exist
-      const classSemesterBb =await classSemesterModel.findOne({
+      const classSemesterBb = await classSemesterModel.findOne({
         where: {
           idClassSemester: idClassSemester,
         },
       });
-    
+
       if (!classSemesterBb) throw new Error("class is not found");
 
       const response = studentProgressModel.destroy({
@@ -129,4 +181,4 @@ class classSemesterController {
     }
   }
 }
-module.exports = { classSemesterController, addStudentsToClassSemester};
+module.exports = { classSemesterController, addStudentsToClassSemester };
