@@ -32,6 +32,7 @@ app.use("/grades", gradeRoute);
 app.use("/tests", testRoute);
 app.use("/subject-score", subjectScoreRoute);
 app.use("/parameters", parametersRoute);
+app.use("/semesterReport", semesterReportRoute);
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "not found" });
