@@ -118,6 +118,27 @@ class studentController {
     } catch (e) {
       return res.status(404).json(Response.errorResponse(404, e.message));
     }
+  };
+
+  static async getStudentInClass(req,res,next) {
+    try {
+      const year = req.query.year;
+      const order = req.query.order;
+      const idClass = req.query.idClass;
+      const progresses = await sequelize.query(`
+        select student.idStudent, student.fullName
+        from semester inner join classsemester as clasem on semester.idSemester = clasem.idSemester
+        inner join class on class.idClass = clasem.idClass
+        inner join studentprogress as prog on prog.idClassSemester = clasem.idClassSemester
+        inner join student on prog.idStudent = student.idStudent
+        where semester.year = ${year} and semester.order = ${order} and class.idClass = ${idClass};
+      `, { type: QueryTypes.SELECT }
+      );
+      console.log(progresses);
+      return res.status(200).json(Response.successResponse(progresses));
+    } catch (e) {
+      return res.status(404).json(Response.errorResponse(404, e.message));
+    }
   }
 
   static async createStudent(req, res, next) {
