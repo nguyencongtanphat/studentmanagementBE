@@ -6,6 +6,8 @@ const studentController = require("../controllers/students");
 route.put("/:id", studentController.updateStudent);
 //add new student
 route.post("/", studentController.createStudent);
+//get student progresses
+route.get("/progress", studentController.getStudentProgresses);
 //get all students
 route.get("/", studentController.getAllStudents);
 //get student by id
