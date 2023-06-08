@@ -3,6 +3,8 @@ const subjectScoreModel = require("../models/subjectScore");
 const subjectScoreDetailModel = require("../models/subjectScoreDetail");
 const subjectModel = require("../models/subject");
 const Response = require("../utils/response");
+const sequelize = require("../utils/sequelize");
+const { QueryTypes } = require("sequelize");
 
 class subjectScoreController {
   static async createSubjectScore(req, res, next) {
@@ -63,9 +65,58 @@ class subjectScoreController {
     } catch (e) {
       return res.status(404).json(Response.errorResponse(404, e.message));
     }
-  }
+  };
 
-  
+  static async getSubjectScoreDetails(req, res, next) {
+    try {
+      const {idStudent, year, order} = req.query;
+      const response = await sequelize.query(`
+        select sj.name, detail.score, t.testName, sjscore.avgScore
+        from Test as t inner join subjectscoredetail as detail on t.idTest = detail.idTest
+        inner join subjectscore as sjscore on detail.idSubjectScore = sjscore.idSubjectScore
+        inner join subjectteacher as sjteacher on sjscore.idSubjectTeacher = sjteacher.idSubjectTeacher
+        inner join subject as sj on sj.idSubject = sjteacher.idSubject
+        where idStudentProgress in (
+          select idStudentProgress
+            from studentprogress
+            where idStudent in (
+            select idStudent
+                from student
+                where idStudent = ${idStudent}
+            ) and idClassSemester in (
+            select idClassSemester
+                from classsemester
+                where idSemester in (
+              select idSemester
+                    from semester
+                    where semester.year = ${year} and semester.order = ${order}
+                )
+            )
+        );`
+      , { type: QueryTypes.SELECT }
+      );
+      return res.status(200).json(Response.successResponse(response));
+    } catch (e) {
+      return res.status(404).json(Response.errorResponse(404, e.message));
+    }
+  };
+
+  static async getListOfStudentScores(req, res, next) {
+    try {
+      const response = await sequelize.query(`
+        select student.idStudent, student.fullName, class.name, semester.order, progress.avgSemScore, semester.year
+        from student right join studentprogress as progress on student.idStudent = progress.idStudent
+        left join classsemester as classsem on classsem.idClassSemester = progress.idClassSemester
+        left join class on class.idClass = classsem.idClass
+        inner join semester on semester.idSemester = classsem.idSemester;`
+      , { type: QueryTypes.SELECT }
+      );
+
+      return res.status(200).json(Response.successResponse(response));
+    } catch (e) {
+      return res.status(404).json(Response.errorResponse(404, e.message));
+    }
+  }
 }
 
 module.exports = subjectScoreController;
