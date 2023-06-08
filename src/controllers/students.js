@@ -48,9 +48,18 @@ class studentController {
       //find the student
       const student = await studentModel.findByPk(id);
       //find all the class students learn
-      const classStudent = await student.getClasses();
-      const classNames = classStudent.map((classObj) => classObj.name);
-      console.log("class: ", classStudent);
+      const classes = await sequelize.query(
+        `SELECT c.name
+        FROM student s, studentprogress sp, classsemester cs, class c
+        WHERE s.idStudent = sp.idStudent
+        AND sp.idClassSemester = cs.idClassSemester
+        AND cs.idClass = c.idClass
+        AND s.idStudent = ${id}
+    `,
+        { type: QueryTypes.SELECT }
+      );
+      const classNames = classes.map((classObj) => classObj.name);
+      console.log("class: ", classNames);
 
       if (!student) {
         throw new Error(
