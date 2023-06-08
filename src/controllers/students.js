@@ -33,7 +33,7 @@ class studentController {
           );
           const classNames = classes.map((classObj) => classObj.name);
           newStudents.push({ ...students[i]["dataValues"], classNames });
-        }
+          }
         students = newStudents;
       }
       return res.status(200).json(Response.successResponse(students));

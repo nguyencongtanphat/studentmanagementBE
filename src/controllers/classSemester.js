@@ -119,17 +119,6 @@ class classSemesterController {
       );
       //update classSemester
       classSemesterdb.update(req.body)
-      //delete 
-      await studentProgressModel.destroy({
-        where: {
-          idClassSemester: idClassSemester,
-        },
-      });
-      //add student
-      await addStudentsToClassSemester(
-        req.body.listIdStudent,
-        idClassSemester
-      );
       console.log("body data: ", req.body);
       return res.status(200).json(Response.successResponse("success"));
       // await classSemesterdb.update(req.body)
@@ -157,9 +146,9 @@ class classSemesterController {
 
   static async deleteStudentsFromClassSemester(req, res, next) {
     try {
-      const idClassSemester = req.params.id;
-      const idStudent = req.body.idStudent;
-      console.log("delete students from:", idClassSemester, idStudent);
+      const idClassSemester = req.params.id
+      const idStudent = req.params.idStudent;
+      console.log("delete students from:", idClassSemester, idStudent, req.body);
       //check class semesters is exist
       const classSemesterBb = await classSemesterModel.findOne({
         where: {
