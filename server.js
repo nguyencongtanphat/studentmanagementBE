@@ -20,6 +20,7 @@ const subjectReportRoute = require("./src/routes/subjectReport");
 const parametersRoute = require('./src/routes/parameters')
 const subjectsRoute = require("./src/routes/subject")
 const classSemesterRoute = require("./src/routes/classSemester")
+const userRoute = require("./src/routes/user")
 
 app.use("/subject-report", subjectReportRoute);
 app.use("/subjects", subjectsRoute);
@@ -32,6 +33,7 @@ app.use("/grades", gradeRoute);
 app.use("/tests", testRoute);
 app.use("/subject-score", subjectScoreRoute);
 app.use("/parameters", parametersRoute);
+app.use("/user", userRoute);
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "not found" });
