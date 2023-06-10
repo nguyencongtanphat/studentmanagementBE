@@ -40,7 +40,21 @@ class teacherController {
       if (!teacher) {
         throw "Something went wrong please wait a minute and try again";
       }
-      return res.status(200).json(Response.successResponse(teacher));
+      const subjects = await sequelize.query(
+        `SELECT subject.name
+            FROM subjectteacher, subject 
+            WHERE subjectteacher.idSubject = subject.idSubject
+            AND subjectteacher.idTeacher = ${teacher.idTeacher}
+        `,
+        { type: QueryTypes.SELECT }
+      );
+      const subjectsName = subjects.map(subject =>subject.name)
+      return res.status(200).json(
+        Response.successResponse({
+          ...teacher.dataValues,
+          subjects: subjectsName,
+        })
+      );
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
