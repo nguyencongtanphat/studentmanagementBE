@@ -133,6 +133,12 @@ const { QueryTypes } = require("sequelize");
             }
           });
           for (let testId in scores) {
+            await subjectScoreDetailModel.destroy({
+              where: {
+                idTest: testId,
+                idSubjectScore: subjectScore.idSubjectScore
+              }
+            });  
             for (let j = 0; j < scores[testId].length; j++) {
               await subjectScoreDetailModel.create({
                 score: scores[testId][j],
