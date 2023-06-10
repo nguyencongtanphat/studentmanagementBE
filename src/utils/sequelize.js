@@ -2,14 +2,13 @@ const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
 
-const sequelize = new Sequelize("managestudent", "root", '2911', {
+const sequelize = new Sequelize("managestudent", "root", null, {
   host: "localhost",
   dialect: "mysql",
   define: {
     freezeTableName: true,
   },
 });
-
 
 // const sequelize = new Sequelize(
 //   process.env.DBNAME,
