@@ -4,6 +4,7 @@ const sequelize = require("../utils/sequelize");
 const { query } = require("express");
 const { QueryTypes } = require("sequelize");
 const Response = require("../utils/response");
+const e = require("express");
 
 class subjectController {
   static async getAllSubjects(req, res, next) {
@@ -13,19 +14,37 @@ class subjectController {
         throw "Something went wrong please wait a minute and try again";
       }
      let newSubjects = [];
-     for (let i = 0; i < subjects.length; i++) {
-       //find the class of a student
-       const teachers = await sequelize.query(
-         `SELECT teacher.fullName
+     const {isIdTeacher} = req.query
+     if (isIdTeacher){
+       for (let i = 0; i < subjects.length; i++) {
+         //find the class of a student
+         const teachers = await sequelize.query(
+           `SELECT teacher.fullName, subjectteacher.idSubjectTeacher
             FROM subjectteacher, teacher 
             WHERE subjectteacher.idTeacher = teacher.idTeacher
             AND subjectteacher.idSubject = ${subjects[i].idSubject}
         `,
-         { type: QueryTypes.SELECT }
-       );
-       const teachersName = teachers.map((teacher) => teacher.fullName);
-       newSubjects.push({ ...subjects[i]["dataValues"], teachersName });
+           { type: QueryTypes.SELECT }
+         );
+         
+         newSubjects.push({ ...subjects[i]["dataValues"], teachers});
+       }
+     }else{
+       for (let i = 0; i < subjects.length; i++) {
+         //find the class of a student
+         const teachers = await sequelize.query(
+           `SELECT teacher.fullName
+            FROM subjectteacher, teacher 
+            WHERE subjectteacher.idTeacher = teacher.idTeacher
+            AND subjectteacher.idSubject = ${subjects[i].idSubject}
+        `,
+           { type: QueryTypes.SELECT }
+         );
+         const teachersName = teachers.map((teacher) => teacher.fullName);
+         newSubjects.push({ ...subjects[i]["dataValues"], teachersName });
+       }
      }
+      
      subjects = newSubjects;
       return res.status(200).json(Response.successResponse(subjects));
     } catch (err) {

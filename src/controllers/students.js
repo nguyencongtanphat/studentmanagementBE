@@ -154,13 +154,13 @@ class studentController {
       //create student
       const studentReponse = await newStudent.save();
      
-      //add student to class
+      // //add student to class
 
-      await addStudentsToClassSemester(
-        [studentReponse.idStudent],
-        req.body.idClassSemester
-      );
-      return res.status(200).json(Response.successResponse("success"));
+      // await addStudentsToClassSemester(
+      //   [studentReponse.idStudent],
+      //   req.body.idClassSemester
+      // );
+      return res.status(200).json(Response.successResponse(studentReponse));
     } catch (err) {
       console.log("catch err:", err);
       return res.status(404).json(Response.errorResponse(404, err.message));

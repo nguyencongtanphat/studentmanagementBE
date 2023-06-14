@@ -4,15 +4,43 @@ const sequelize = require("../utils/sequelize");
 const { QueryTypes } = require("sequelize");
 const classSemesterModel = require("../models/classsemester");
 const studentProgressModel = require("../models/studentprogress");
+const SubjectTeacherClassSemester =  require("../models/subjectTeacherClassSemester")
+const SubjectScoreModel = require("../models/subjectScore")
 
-const addStudentsToClassSemester = async (listIdStudent, idClassSemester) => {
+const addStudentsToClassSemester = async (listIdStudent, idClassSemester, listSubjectTeacher) => {
   try {
+    console.log("here1: ", listIdStudent, idClassSemester, listSubjectTeacher);
+    let SubjectTeacherClassSemesterList = [];
+    //create SubjectTeacherClassSemester
+    for(let i = 0 ; i< listSubjectTeacher.length; i++){
+      const data = {
+        idClassSemester: idClassSemester,
+        idSubjectTeacher: listSubjectTeacher[i],
+      }
+      console.log("data", data)
+      const result = await SubjectTeacherClassSemester.create(data);
+      SubjectTeacherClassSemesterList.push(
+        result.idSubjectTeacherClassSemester
+      );
+    }
+    console.log("here2: ", SubjectTeacherClassSemesterList);
+
+    //create studentprogress
     for (let i = 0; i < listIdStudent.length; i++) {
-      await studentProgressModel.create({
+      const newStudentProgress =  await studentProgressModel.create({
         idStudent: listIdStudent[i],
         idClassSemester: idClassSemester,
-        avgSemester: 0,
+        avgSemScore: 0,
       });
+      console.log("new student progress: ",  newStudentProgress.idStudentProgress)
+      //create subject score for this student
+      for(let j = 0; j<SubjectTeacherClassSemesterList.length; j++ ){
+        await SubjectScoreModel.create({
+          idStudentProgress: newStudentProgress.idStudentProgress,
+          idSubjectTeacherClassSemester: SubjectTeacherClassSemesterList[j],
+          avgScore: 0,
+        });
+      }
     }
   } catch (err) {
     throw new Error(err.message);
@@ -81,8 +109,14 @@ class classSemesterController {
   static async createClassesSemester(req, res, next) {
     try {
       console.log(req.body);
-      const { idClass, idSemester, idTeacher, number, listIdStudent } =
-        req.body;
+      const {
+        idClass,
+        idSemester,
+        idTeacher,
+        number,
+        listIdStudent,
+        listSubjectTeacher,
+      } = req.body;
 
       //check is existing
       const classSemesterDb = await classSemesterModel.findOne({
@@ -101,9 +135,11 @@ class classSemesterController {
         idTeacher,
         number,
       });
+      
       await addStudentsToClassSemester(
         listIdStudent,
-        newClassSemester.idClassSemester
+        newClassSemester.idClassSemester,
+        listSubjectTeacher,
       );
       return res.status(200).json(Response.successResponse("success"));
     } catch (err) {

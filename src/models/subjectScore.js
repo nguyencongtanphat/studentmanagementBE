@@ -18,11 +18,11 @@ SubjectScore.init(
       },
       require: true,
     },
-    idSubjectTeacher: {
+    idSubjectTeacherClassSemester: {
       type: DataTypes.INTEGER,
       references: {
-        model: "SubjectTeacher",
-        key: "idSubjectTeacher",
+        model: "SubjectTeacherClassSemester",
+        key: " idSubjectTeacherClassSemester",
       },
       require: true,
     },
