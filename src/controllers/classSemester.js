@@ -47,6 +47,43 @@ const addStudentsToClassSemester = async (listIdStudent, idClassSemester, listSu
   }
 };
 
+const addStudentsToClassSemesterExist = async (
+  listIdStudent,
+  idClassSemester,
+  listSubjectTeacherSemester
+) => {
+  try {
+    console.log(
+      "here1: ",
+      listIdStudent,
+      idClassSemester,
+      listSubjectTeacherSemester
+    );
+
+    //create studentprogress
+    for (let i = 0; i < listIdStudent.length; i++) {
+      const newStudentProgress = await studentProgressModel.create({
+        idStudent: listIdStudent[i],
+        idClassSemester: idClassSemester,
+        avgSemScore: 0,
+      });
+      console.log(
+        "new student progress: ",
+        newStudentProgress.idStudentProgress
+      );
+      //create subject score for this student
+      for (let j = 0; j < listSubjectTeacherSemester.length; j++) {
+        await SubjectScoreModel.create({
+          idStudentProgress: newStudentProgress.idStudentProgress,
+          idSubjectTeacherClassSemester: listSubjectTeacherSemester[j],
+          avgScore: 0,
+        });
+      }
+    }
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
 class classSemesterController {
   static async getAllClassesSemester(req, res, next) {
     try {
@@ -164,6 +201,7 @@ class classSemesterController {
   }
   static async addStudentsToClassSemester(req, res, next) {
     try {
+      console.log("hereh")
       const idClassSemester = req.params.id;
       //check is classSemester exists
       const classSemesterdb = await classSemesterModel.findByPk(
@@ -173,7 +211,29 @@ class classSemesterController {
         throw new Error("class is not found in this semester database");
 
       const { listIdStudent } = req.body;
-      await addStudentsToClassSemester(listIdStudent, idClassSemester);
+      //find subject-teacher-class-semester
+      const result = await SubjectTeacherClassSemester.findAll({
+        where: {
+          idClassSemester: classSemesterdb.idClassSemester,
+        },
+        attributes: ["idClassSemester"],
+      });
+      const response = await sequelize.query(
+        `SELECT idSubjectTeacherClassSemester 
+        FROM subjectteacherclasssemester
+        WHERE idClassSemester = ${classSemesterdb.idClassSemester}
+        `,
+        { type: QueryTypes.SELECT }
+      );
+      console.log("found", response);
+      const listSubjectTeacherSemester = response.map(
+        (teacher) => teacher.idSubjectTeacherClassSemester
+      );
+      await addStudentsToClassSemesterExist(
+        listIdStudent,
+        idClassSemester,
+        listSubjectTeacherSemester
+      );
       return res.status(200).json(Response.successResponse("success"));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
