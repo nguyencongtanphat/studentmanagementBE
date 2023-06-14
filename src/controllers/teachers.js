@@ -1,5 +1,6 @@
 const teacherModel = require("../models/teacher");
 const subjectteacherModel = require("../models/subjectteacher");
+const UserModel = require("../models/user");
 const Response = require("../utils/response");
 const { Op } = require("sequelize");
 const sequelize = require("../utils/sequelize");
@@ -78,6 +79,13 @@ class teacherController {
           idTeacher: newTeacherRes.idTeacher,
         });
       }
+      //create user
+      await UserModel.create({
+        userName: req.body.userName,
+        password: req.body.password,
+        role: "Teacher",
+        idTeacher: newTeacherRes.idTeacher,
+      });
       return res.status(200).json(Response.successResponse("success"));
     } catch (err) {
       return res.status(404).json(Response.errorResponse(404, err.message));
