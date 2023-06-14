@@ -34,6 +34,49 @@ class teacherController {
       return res.status(404).json(Response.errorResponse(404, err.message));
     }
   }
+  static async getAllTeachersWithClassSem(req, res, next){
+    try {
+      let year = req.query.year;
+      let order = req.query.order;
+      console.log(year, "  -  ", order);
+      let teachers = await teacherModel.findAll();
+      if (!teachers) {
+        throw "Don't have any teacher";
+      }
+      let newTeachers = [];
+      for (let i = 0; i < teachers.length; i++) {
+        //find the class of a student
+        const subjects = await sequelize.query(
+          `SELECT subject.name
+            FROM subjectteacher, subject 
+            WHERE subjectteacher.idSubject = subject.idSubject
+            AND subjectteacher.idTeacher = ${teachers[i].idTeacher}
+        `,
+          { type: QueryTypes.SELECT }
+        );
+        const classSem = await sequelize.query(
+          `SELECT idClass
+            FROM classsemester cs, semester s
+            WHERE cs.idTeacher = ${teachers[i].idTeacher} AND
+                  s.order = ${order} AND
+                  s.year = ${year} AND
+                  s.idSemester = cs.idSemester
+        `,
+          { type: QueryTypes.SELECT }
+        );
+        console.log(classSem);
+        const subjectName = subjects.map((subject) => subject.name);
+        const classSemName = classSem.map((item) => item['idClass']);
+        console.log(classSemName);
+        newTeachers.push({ ...teachers[i]["dataValues"], subjectName,  classSemName});
+      }
+      teachers = newTeachers;
+
+      return res.status(200).json(Response.successResponse(teachers));
+    } catch (err) {
+      return res.status(404).json(Response.errorResponse(404, err.message));
+    }
+  }
   static async getTeacherById(req, res, next) {
     try {
       let teacher = await teacherModel.findByPk(req.params.id);
