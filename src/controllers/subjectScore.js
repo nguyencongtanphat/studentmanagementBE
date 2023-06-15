@@ -71,7 +71,7 @@ const { QueryTypes } = require("sequelize");
     try {
       const {idStudent, year, order} = req.query;
       const response = await sequelize.query(`
-        select sj.idSubject, detail.score, t.testName, sjscore.avgScore, stcs.idSubjectTeacherClassSemester
+        Select sj.idSubject, detail.score, t.testName, sjscore.avgScore, stcs.idSubjectTeacherClassSemester
         from Test as t inner join subjectscoredetail as detail on t.idTest = detail.idTest
         right join subjectscore as sjscore on detail.idSubjectScore = sjscore.idSubjectScore
         inner join subjectteacherclasssemester as stcs on sjscore.idSubjectTeacherClassSemester = stcs.idSubjectTeacherClassSemester
