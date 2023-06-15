@@ -71,10 +71,11 @@ const { QueryTypes } = require("sequelize");
     try {
       const {idStudent, year, order} = req.query;
       const response = await sequelize.query(`
-        select sj.idSubject, sj.name, detail.score, t.testName, sjscore.avgScore
+        select sj.idSubject, detail.score, t.testName, sjscore.avgScore, stcs.idSubjectTeacherClassSemester
         from Test as t inner join subjectscoredetail as detail on t.idTest = detail.idTest
-        inner join subjectscore as sjscore on detail.idSubjectScore = sjscore.idSubjectScore
-        inner join subjectteacher as sjteacher on sjscore.idSubjectTeacher = sjteacher.idSubjectTeacher
+        right join subjectscore as sjscore on detail.idSubjectScore = sjscore.idSubjectScore
+        inner join subjectteacherclasssemester as stcs on sjscore.idSubjectTeacherClassSemester = stcs.idSubjectTeacherClassSemester
+        inner join subjectteacher as sjteacher on stcs.idSubjectTeacher = sjteacher.idSubjectTeacher
         inner join subject as sj on sj.idSubject = sjteacher.idSubject
         where idStudentProgress in (
           select idStudentProgress
@@ -120,16 +121,15 @@ const { QueryTypes } = require("sequelize");
 
   static async createStudentScores(req,res,next) {
     try {
-      const subjectId = req.body.idSubject;
       const result = req.body.result;
       const create_func = async () => {
         for (let item of result) {
-          const {idStudentProgress, ...scores} = item;
+          const {idStudentProgress, idSubjectTeacherClassSemester, ...scores} = item;
           console.log(item);
           const subjectScore = await subjectScoreModel.findOne({
             where: {
               idStudentProgress: idStudentProgress,
-              idSubjectTeacher: subjectId
+              idSubjectTeacherClassSemester: idSubjectTeacherClassSemester
             }
           });
           for (let testId in scores) {
